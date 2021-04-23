@@ -1,0 +1,72 @@
+.sorted-panel {
+    padding: 24px 48px;
+}
+
+.sorted-content {
+    display: flex;
+    margin-top: 24px;
+}
+
+.group-select-menu {
+    min-width: 232px;
+}
+
+.group-select-button {
+    padding: 12px 104px 12px 24px;
+    margin-right: 24px;
+    cursor: pointer;    
+}
+
+.group-select-button:hover {
+    background-color: var(--main-color);
+    color: var(--bg-color);
+}
+
+.active-select-button {
+    border-left: 8px solid var(--sub-color);
+    padding-left: 20px;
+}
+
+.display-panel {
+    display: flex;
+    flex-wrap: wrap;
+
+    animation: fall-in .35s ease;
+}
+
+@keyframes fall-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.display-panel > div {
+    margin: 8px;
+}
+
+.grouping-separator {
+    width: 135px;
+    height: 135px;
+
+    padding: 12px;
+
+    background-color: var(--main-color);
+
+    display: flex;
+}
+
+.grouping-separator > div {
+    background-color: var(--main-color);
+    color: var(--bg-color);
+
+    font-size: 1.5vw;
+    word-break: break-word;
+
+    margin: auto;
+}
