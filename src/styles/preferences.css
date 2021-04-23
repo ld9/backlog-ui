@@ -1,0 +1,53 @@
+.preference-section {
+    margin: 24px 48px;
+    padding: 12px;
+}
+
+.preference-heading {
+    margin-bottom: 24px;
+}
+
+.preference-heading > p {
+    opacity: 0.8;
+}
+
+.theme-highlight {
+    padding: 4px;
+    background-color: var(--main-color);
+    color: var(--bg-color);
+}
+
+.theme-current {
+    margin-bottom: 20px;
+}
+
+.theme-selection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.theme-select-button {
+    padding: 4px 12px;
+    margin: 8px 36px 8px 0;
+
+    border: 2px solid;
+
+    cursor: pointer;
+}
+
+.theme-select-button:hover {
+    transform: scale(1.1);
+}
+
+.font-select-contain {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.font-select-button {
+    border: 2px solid var(--main-color);
+    margin: 8px 32px;
+    padding: 4px 12px;
+    cursor: pointer;
+    margin-left: 0;
+}
