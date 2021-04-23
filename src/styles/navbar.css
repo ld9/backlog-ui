@@ -1,0 +1,45 @@
+#nav-container, #nav-container * {
+    background-color: var(--main-color);
+    color: var(--bg-color);
+}
+
+#nav-container {
+    padding: 12px 48px;
+    display: flex;
+}
+
+#nav-container * {
+    font-weight: 700;
+}
+
+#nav-title-media {
+    margin: auto;
+    margin-left: 0;
+
+    display: flex;
+}
+
+#nav-title-media > div:first-child {
+    margin-right: 6px;
+    padding-right: 24px;
+
+    border-right: 1px solid var(--pri-color);
+}
+
+#nav-container a {
+    padding: 12px 24px; 
+}
+
+#nav-user-links {
+    margin: auto;
+    margin-right: 0;
+}
+
+#nav-user-links > a:last-child {
+    margin-right: 0;
+}
+
+.active-link {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
