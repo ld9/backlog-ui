@@ -1,0 +1,29 @@
+.grid-container {
+    display: grid;
+
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+
+    grid-column-start: 1;
+
+    height: 100vh;
+}
+
+.title-header {
+    grid-column-start: 2;
+    grid-row-start: 2;
+
+    font-size: 42px;
+}
+
+.link-box {
+    grid-column-start: 2;
+    grid-row-start: 3;
+
+    display: grid;
+    grid-template-columns: 204px 128px;
+}
+
+h1 { 
+    letter-spacing: 6px;
+}

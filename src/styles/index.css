@@ -1,0 +1,65 @@
+* {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  font-weight: 400;
+
+  box-sizing: border-box;
+}
+
+body * {
+  transition: 0.27s ease;
+
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.loading-container {
+  display: grid;
+
+  justify-items: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+:root {
+  font-family: 'Roboto Mono';
+}
+
+body {
+  margin: 0;
+  font-family: inherit, monospace;
+}
+
+h1 {
+  color: var(--main-color);
+}
+
+/* GET RID OF ME EVENTUALLY! */
+
+.temp-positionFixed {
+  position: fixed;
+  bottom: 0;
+  left: 16px;
+  width: 360px;
+
+  border: 2px solid var(--main-color);
+  border-bottom: none;
+  padding: 12px;
+}
+
+.temp-heading {
+  position: sticky; 
+  margin-bottom: 12px;
+}
+
+.temp-contents {
+  overflow-y: scroll;
+  height: 240px;
+}
+
+.temp-positionFixed button {
+  margin: 2px;
+}
