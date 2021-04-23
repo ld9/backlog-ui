@@ -1,0 +1,32 @@
+.homepage-section {
+	padding: 24px 24px 0 24px;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Contain Tracks Scroll Thing */
+
+.test-contain-tracks {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.test-contain-tracks > div {
+	margin: 8px 16px 8px 0;
+}
+
+
+.test-contain-videos {
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+}
+
+.test-contain-videos > div {
+	margin: 8px 16px 8px 0;
+}
+
+.homepage-section-parent {
+	display: flex;
+	flex-direction: column;
+}
