@@ -1,0 +1,15 @@
+import { bTheme } from '../ThemeCollection'
+
+const theme: bTheme = {
+	'--bg-color': '#fec8cd',
+	'--main-color': '#ffffff',
+	'--caret-color': '#ffffff',
+	'--sub-color': '#a30000',
+	'--text-color': '#ffffff',
+	'--error-color': '#2e7dde',
+	'--error-extra-color': '#2e7dde',
+	'--colorful-error-color': '#2e7dde',
+	'--colorful-error-extra-color': '#2e7dde',
+};
+
+export default theme;
