@@ -6,7 +6,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { createGlobalState } from 'react-hooks-global-state';
+import { createGlobalState } from "react-hooks-global-state";
 
 // import Login from './routes/Login';
 
@@ -26,12 +26,12 @@ const Preferences = lazy(() => import("./routes/user/Preferences"));
 const Dashboard = lazy(() => import("./routes/user/Dashboard"));
 const NavHeader = lazy(() => import("./components/NavHeader"));
 
-const initialState = {
-  theme: 'bushido',
-  font: 'Roboto Mono',
-  user: {},
-  token: ''
-}
+export const initialState = {
+  theme: "bushido",
+  font: "Roboto Mono",
+  tokenExpire: localStorage.getItem('user-token-expire'),
+  token: localStorage.getItem('user-token'),
+};
 
 const { useGlobalState } = createGlobalState(initialState);
 
