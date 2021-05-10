@@ -1,0 +1,51 @@
+.signup-modal-container {
+    text-align: left;
+}
+
+.signup-modal-container > form > div > label > p {
+    padding-bottom: 4px;
+    /* margin: 24px auto auto auto; */
+
+    /* border-bottom: 1px solid var(--pri-color); */
+}
+
+.signup-modal-container > form > div > label > input {
+    background-color: var(--bgr-deep);
+    color: var(--pri-deep);
+
+    width: 100%;
+}
+
+.signup-modal-container > form > div {
+    margin-top: 24px;
+}
+
+.signup-modal-container > form > div > input {
+    width: 100%;
+    margin: 24px auto 16px auto;
+    padding: 8px;
+}
+
+.alter-email:after {
+    color: var(--main-color);
+    margin-left: 10px;
+    font-size: .8em;
+    content: 'Invalid Email';
+}
+
+.mismatch-password:after {
+    color: var(--main-color);
+    margin-left: 10px;
+    font-size: .8em;
+    content: 'Passwords Must Match';
+}
+
+.alert-message {
+    text-align: center;
+    color: var(--main-color);
+}
+
+.create-status {
+    margin-top: 24px;
+    text-align: center;
+}
