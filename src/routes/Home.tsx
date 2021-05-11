@@ -5,12 +5,10 @@ import '../styles/home.css'
 
 export default function Home() {
 
-    
-
     return (
         <div className='grid-container'>
             <div className='title-header'>
-                <h1>Demo Project Name</h1>
+                <h1>Backlog</h1>
                 {/* <h2>{ auth.user ? "false" : "true" }</h2> */}
             </div>
             <div className='link-box'>
