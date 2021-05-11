@@ -2,21 +2,28 @@
     text-align: left;
 }
 
-.login-modal-container > form > label > p {
+.login-modal-container > form > div > label > p {
     padding-bottom: 4px;
     margin: 24px auto auto auto;
 
     /* border-bottom: 1px solid var(--pri-color); */
 }
 
-.login-modal-container > form > label > input {
+.login-modal-container > form > div > label > input {
     background-color: var(--bgr-deep);
     color: var(--pri-deep);
+
+    width: 100%;
 }
 
-.login-modal-container > form > div > button {
+.login-modal-container > form > div > input {
     width: 100%;
     margin: 24px auto 16px auto;
     padding: 8px;
 }
 
+.login-fail {
+    color: var(--main-color);
+    text-align: center;
+    margin-top: 24px;
+}
