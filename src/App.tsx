@@ -35,13 +35,8 @@ export const initialState = {
 
 const { useGlobalState } = createGlobalState(initialState);
 
-// X-MoviePage
 export default function App() {
   return (
-    // <UserProvider value={{
-    //   isLoggedIn: false,
-    //   user: {}
-    // }}>
     <Router>
       <Suspense
         fallback={
@@ -73,7 +68,6 @@ export default function App() {
         </Switch>
       </Suspense>
     </Router>
-    // </UserProvider>
   );
 }
 
