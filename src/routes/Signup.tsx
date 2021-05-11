@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import "../styles/signup.css";
 import { createGlobalState } from "react-hooks-global-state";
 import { initialState } from "../App";
-import { FormEvent, ReactNode, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { BASE_API_URL } from "../variables";
 
 export default function Signup() {
@@ -26,6 +26,12 @@ export default function Signup() {
   const [passConfOk, setPassConfOk] = useState(true);
 
   const [submitting, setSubmitting] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      history.replace("/user");
+    }
+  }, []);
 
   const loginUser = async (e: FormEvent) => {
     e.preventDefault();
