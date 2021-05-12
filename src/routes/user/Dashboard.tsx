@@ -15,15 +15,15 @@ export default function Dashboard() {
         art_uri: "https://i.pinimg.com/474x/05/23/a2/0523a2adeb72ac0835178cbba3d34b85.jpg"
     }
 
-    let demoVideo: VideoFile = {
-        title: "Demo Movie or Documentary Title",
-        horiz_uri: "https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823__340.jpg",
-        meta: {
-            genre: "Void",
-            year: "Void",
-            tags: []
-        }
-    }
+    // let demoVideo: VideoFile = {
+    //     title: "Demo Movie or Documentary Title",
+    //     horiz_uri: "https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823__340.jpg",
+    //     meta: {
+    //         genre: "Void",
+    //         year: "Void",
+    //         tags: []
+    //     }
+    // }
 
     return (
         <div className="homepage-section-parent">
@@ -46,11 +46,11 @@ export default function Dashboard() {
                 <h2>
                     Continue Watching...
                 </h2>
-                <div className="test-contain-videos">
+                {/* <div className="test-contain-videos">
                     {[...Array(8)].map((x, i) => 
                         <VideoThumb key={i} video={demoVideo}></VideoThumb>
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );
