@@ -1,4 +1,4 @@
-export default interface VideoFile {
+export default interface MediaItem {
     uri: string;
     meta: {
         title: string;
