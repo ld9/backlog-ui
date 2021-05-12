@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function ThemeInfo() {
 	
-	const [fontSize, setFontSize] = useState("1");
+	const [fontSize, setFontSize] = useState("1.25");
 
 	useEffect(() => {
 		// preserve theme name
@@ -23,7 +23,7 @@ export default function ThemeInfo() {
 			</div>
 			
 			<div className='preference-contents'>
-				<input type='range' min='0.75' max='1.25' step='0.025' value={fontSize}
+				<input type='range' min='1' max='1.5' step='0.025' value={fontSize}
 					onChange={(event) => {
                         (window as any).fontSize = event.target.value;
                         setFontSize(event.target.value)
