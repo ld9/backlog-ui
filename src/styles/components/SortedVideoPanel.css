@@ -1,4 +1,4 @@
-.sorted-panel {
+.sorted-panel-inside {
     padding: 24px 48px;
 }
 
@@ -31,10 +31,10 @@
     display: flex;
     flex-wrap: wrap;
 
-    animation: fall-in .35s ease;
+    /* animation: fall-in .35s ease; */
 }
 
-@keyframes fall-in {
+/* @keyframes fall-in {
     0% {
         opacity: 0;
         transform: translateY(-12px);
@@ -44,7 +44,7 @@
         opacity: 1;
         transform: none;
     }
-}
+} */
 
 .display-panel > div {
     margin: 8px;
