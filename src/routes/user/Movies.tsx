@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { createGlobalState } from "react-hooks-global-state";
-import { initialState } from "../../App";
 import SortedPanel from "../../components/SortedVideoPanel";
+import { useGlobalState } from "../../state";
 import VideoFile from "../../types/VideoFile";
 import { BASE_API_URL } from "../../variables";
 
+
 export default function Movies() {
   
-  const { useGlobalState } = createGlobalState(initialState);
   const [token, setToken] = useGlobalState("token");
-
   const [userMovies, setUserMovies] = useState([]);
 
   useEffect(() => {
     // Do it async, boys
     (async () => {
+
       const media = await fetch(`${BASE_API_URL}/api/media`, {
         headers: {
           authorization: `Bearer ${token}`,

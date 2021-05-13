@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
-import { initialState } from '../../App';
+import { useGlobalState } from '../../state';
 import FontButton from './FontButton';
-
-const { useGlobalState } = createGlobalState(initialState);
 
 export default function ThemeInfo() {
 	

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
-import { initialState } from '../../App';
-
-const { useGlobalState } = createGlobalState(initialState);
-
+import { useGlobalState } from '../../state';
 
 export default function ThemeInfo() {
 	

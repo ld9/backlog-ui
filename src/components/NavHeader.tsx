@@ -5,7 +5,6 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { initialState } from "../App";
 
 import "../styles/navbar.css";
 

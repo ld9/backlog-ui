@@ -4,21 +4,21 @@ import { FormEvent, useEffect, useState } from "react";
 import { createGlobalState } from "react-hooks-global-state";
 
 import "../styles/login.css";
-import { initialState } from "../App";
 import { BASE_API_URL } from "../variables";
+import { useGlobalState } from "../state";
 
 export default function Login() {
   let history = useHistory();
 
-  const { useGlobalState } = createGlobalState(initialState);
   const [token, setToken] = useGlobalState("token");
-  const [tokenExpire, setTokenExpire] = useGlobalState("token");
+  const [tokenExpire, setTokenExpire] = useGlobalState("tokenExpire");
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [wrongPass, setWrongPass] = useState(false);
 
   useEffect(() => {
+
     if (token) {
       history.replace("/user");
     }
@@ -47,7 +47,6 @@ export default function Login() {
           return;
         }
 
-        console.log(data);
 
         setToken(data.token);
         setTokenExpire(data.expires);

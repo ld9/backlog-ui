@@ -3,14 +3,13 @@ import { useHistory } from "react-router";
 
 import "../styles/signup.css";
 import { createGlobalState } from "react-hooks-global-state";
-import { initialState } from "../App";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { BASE_API_URL } from "../variables";
+import { useGlobalState } from "../state";
 
 export default function Signup() {
   const history = useHistory();
 
-  const { useGlobalState } = createGlobalState(initialState);
   const [token, setToken] = useGlobalState("token");
   const [tokenExpire, setTokenExpire] = useGlobalState("token");
 

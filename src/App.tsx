@@ -13,6 +13,7 @@ import { createGlobalState } from "react-hooks-global-state";
 import "./App.css";
 
 import themeCollection from "./styles/ThemeCollection";
+import { useGlobalState } from "./state";
 
 const Home = lazy(() => import("./routes/Home"));
 const Login = lazy(() => import("./routes/Login"));
@@ -32,20 +33,13 @@ const localStorageFontSize = localStorage.getItem("fontSize");
 const localStorageTheme = localStorage.getItem("themeName");
 const localStorageFont = localStorage.getItem("font");
 
-export const initialState = {
-  theme: localStorageTheme || "bushido",
-  font: "Roboto Mono",
-  fontSize: localStorageFontSize || "1.25",
-  tokenExpire: localStorage.getItem("user-token-expire"),
-  token: localStorage.getItem("user-token"),
-};
-
-const { useGlobalState } = createGlobalState(initialState);
 
 export default function App() {
   const [theme, setTheme] = useGlobalState("theme");
   const [fontSize, setFontSize] = useGlobalState("fontSize");
   const [font, setFont] = useGlobalState("font");
+
+  const [token, setToken] = useGlobalState("token");
 
   // This makes the loading of preferences work if you are on any page that isn't the preferences page.
   // Without it, loading only works if you're on preferences. You'd need to go to that page

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
-import { initialState } from '../../App';
+import { useGlobalState } from '../../state';
 
 import themeCollection from '../../styles/ThemeCollection';
 import ThemeButton from './ThemeButton';
 
-const { useGlobalState } = createGlobalState(initialState);
 
 export default function ThemeInfo() {
 	
