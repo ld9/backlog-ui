@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { createGlobalState } from 'react-hooks-global-state';
+import { initialState } from '../../App';
 import FontButton from './FontButton';
+
+const { useGlobalState } = createGlobalState(initialState);
 
 export default function ThemeInfo() {
 	
-	const [font, setFont] = useState("Roboto Mono");
+	const [font, setFont] = useGlobalState("font");
 
 	useEffect(() => {
-		// preserve theme name
-		if ((window as any).font) {
-			setFont((window as any).font);
-		} 
-
+		localStorage.setItem('font', font);
 		document.documentElement.style.setProperty('font-family', font);
-
 	}, [font]);
 
 	// Just works as long as the font is available on the system

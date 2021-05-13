@@ -8,7 +8,6 @@ export default function ThemeButton({ font, setFont }: any) {
                 }
             }
             onClick={() => {
-                (window as any).font = font;
                 setFont(font)
             }}
         >

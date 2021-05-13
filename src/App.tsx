@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +11,8 @@ import { createGlobalState } from "react-hooks-global-state";
 // import Login from './routes/Login';
 
 import "./App.css";
+
+import themeCollection from "./styles/ThemeCollection";
 
 const Home = lazy(() => import("./routes/Home"));
 const Login = lazy(() => import("./routes/Login"));
@@ -26,16 +28,54 @@ const Preferences = lazy(() => import("./routes/user/Preferences"));
 const Dashboard = lazy(() => import("./routes/user/Dashboard"));
 const NavHeader = lazy(() => import("./components/NavHeader"));
 
+const localStorageFontSize = localStorage.getItem("fontSize");
+const localStorageTheme = localStorage.getItem("themeName");
+const localStorageFont = localStorage.getItem("font");
+
 export const initialState = {
-  theme: "bushido",
+  theme: localStorageTheme || "bushido",
   font: "Roboto Mono",
-  tokenExpire: localStorage.getItem('user-token-expire'),
-  token: localStorage.getItem('user-token'),
+  fontSize: localStorageFontSize || "1.25",
+  tokenExpire: localStorage.getItem("user-token-expire"),
+  token: localStorage.getItem("user-token"),
 };
 
 const { useGlobalState } = createGlobalState(initialState);
 
 export default function App() {
+  const [theme, setTheme] = useGlobalState("theme");
+  const [fontSize, setFontSize] = useGlobalState("fontSize");
+  const [font, setFont] = useGlobalState("font");
+
+  // This makes the loading of preferences work if you are on any page that isn't the preferences page.
+  // Without it, loading only works if you're on preferences. You'd need to go to that page
+  // in order to get it to update.
+  useEffect(() => {
+    // Load ThemeName from LocalStorage
+    if (localStorageTheme) {
+      let theme = themeCollection[localStorageTheme];
+      setTheme(localStorageTheme);
+
+      Object.entries(theme).forEach((entry) => {
+        let [property, value] = entry;
+        document.documentElement.style.setProperty(property, value);
+      });
+    }
+
+    // Load FontSize from LocalStorage
+    if (localStorageFontSize) {
+      setFontSize(localStorageFontSize);
+      document.documentElement.style.setProperty("font-size", localStorageFontSize + "em");
+    }
+
+    // Load FontFamily from LocalStorage
+
+    if (localStorageFont) {
+      setFont(localStorageFont);
+      document.documentElement.style.setProperty("font-family", localStorageFont);
+    }
+  }, []);
+
   return (
     <Router>
       <Suspense

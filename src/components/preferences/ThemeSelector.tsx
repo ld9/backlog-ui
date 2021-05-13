@@ -13,20 +13,13 @@ export default function ThemeInfo() {
 
 	useEffect(() => {
 		let theme = themeCollection[themeName];
+		localStorage.setItem('themeName', themeName);
 
 		Object.entries(theme).forEach(entry => {
 			let [property, value] = entry;
 			document.documentElement.style.setProperty(property, value);
 		});
 	}, [themeName]);
-
-	useEffect(() => {
-		// preserve theme name
-		if ((window as any).theme) {
-			setThemeName((window as any).theme);
-			console.log('window theme set');
-		} 
-	}, [])
 
 	return (
 		<div className='preference-section'>

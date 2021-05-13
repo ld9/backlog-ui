@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { createGlobalState } from 'react-hooks-global-state';
+import { initialState } from '../../App';
+
+const { useGlobalState } = createGlobalState(initialState);
 
 
 export default function ThemeInfo() {
 	
-	const [fontSize, setFontSize] = useState("1.25");
+	const [fontSize, setFontSize] = useGlobalState('fontSize');
 
 	useEffect(() => {
-		// preserve theme name
-		if ((window as any).fontSize) {
-			setFontSize((window as any).fontSize);
-		} 
-
+		localStorage.setItem('fontSize', fontSize);
 		document.documentElement.style.setProperty('font-size', fontSize + 'em');
-
 	}, [fontSize]);
 
 	return (
@@ -25,7 +24,6 @@ export default function ThemeInfo() {
 			<div className='preference-contents'>
 				<input type='range' min='1' max='1.5' step='0.025' value={fontSize}
 					onChange={(event) => {
-                        (window as any).fontSize = event.target.value;
                         setFontSize(event.target.value)
                     }} />
 			</div>
