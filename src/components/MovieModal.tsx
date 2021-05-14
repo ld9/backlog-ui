@@ -3,6 +3,7 @@ import MediaItem from "../types/MediaItem";
 import "../styles/components/MovieModal.css";
 import { ArrowUpRight, Cross } from "akar-icons";
 import React from "react";
+import { strings } from "../strings";
 
 export default function MovieModal({
   media,
@@ -30,7 +31,7 @@ export default function MovieModal({
         <div className="modal-content-head">
           <div className="modal-content-title">{media?.meta.title || "?"}</div>
           <div className="modal-content-play">
-            <span>Watch</span>
+            <span>{strings.movies_popup_watch}</span>
             <ArrowUpRight />
           </div>
         </div>
@@ -41,7 +42,7 @@ export default function MovieModal({
             <div className="modal-content-tags">{media?.tags.toString()}</div>
           </div>
           <div className="modal-content-description">
-            {media?.meta.description || "This file has no description."}
+            {media?.meta.description || strings.movies_popup_defaultDescription}
           </div>
         </div>
       </div>

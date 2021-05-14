@@ -5,6 +5,7 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
+import { strings } from "../strings";
 
 import "../styles/navbar.css";
 
@@ -25,29 +26,29 @@ function NavHeaderContents() {
       <div id="nav-title-media">
         <div id="nav-user-home">
           <NavLink activeClassName="active-link" exact to="/user">
-            Backlog
+            {strings.home_appName}
           </NavLink>
         </div>
         <div id="nav-media-links">
           <NavLink activeClassName="active-link" to="/user/movies">
-            Movies
+            {strings.nav_movies}
           </NavLink>
           <NavLink activeClassName="active-link" to="/user/shows">
-            Shows
+            {strings.nav_shows}
           </NavLink>
           <NavLink activeClassName="active-link" to="/user/music">
-            Music
+            {strings.nav_music}
           </NavLink>
         </div>
       </div>
       <div id="nav-user-links">
         <NavLink activeClassName="active-link" to="/user/admin">
-          Admin
+          {strings.nav_admin}
         </NavLink>
         <NavLink activeClassName="active-link" to="/user/preferences">
-          Settings
+          {strings.nav_settings}
         </NavLink>
-        <NavLink to="/">Change User</NavLink>
+        <NavLink to="/">{strings.nav_logout}</NavLink>
       </div>
     </div>
   );

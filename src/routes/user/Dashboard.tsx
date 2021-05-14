@@ -5,6 +5,7 @@ import VideoFile from '../../types/VideoFile';
 import VideoThumb from '../../components/VideoThumb';
 
 import "../../styles/userhome.css";
+import { strings } from '../../strings';
 
 export default function Dashboard() {
     
@@ -28,11 +29,11 @@ export default function Dashboard() {
     return (
         <div className="homepage-section-parent">
             <div className="homepage-section">
-                <h1>Dashboard</h1>
+                <h1>{strings.dash_title}</h1>
             </div>
             <div className="homepage-section">
                 <h2>
-                    You Recently Listened To... 
+                    {strings.dash_listened}
                 </h2>
                 <div>
                     <div className="test-contain-tracks">
@@ -44,7 +45,7 @@ export default function Dashboard() {
             </div>
             <div className="homepage-section">
                 <h2>
-                    Continue Watching...
+                    {strings.dash_watched}
                 </h2>
                 {/* <div className="test-contain-videos">
                     {[...Array(8)].map((x, i) => 

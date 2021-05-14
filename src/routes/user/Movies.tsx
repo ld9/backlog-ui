@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createGlobalState } from "react-hooks-global-state";
 import SortedPanel from "../../components/SortedVideoPanel";
 import { useGlobalState } from "../../state";
+import { strings } from "../../strings";
 import VideoFile from "../../types/VideoFile";
 import { BASE_API_URL } from "../../variables";
 
@@ -33,7 +34,12 @@ export default function Movies() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  var groupingKeys: string[] = ["Movies", "Genres", "Year", "Tags"];
+  var groupingKeys: string[] = [
+    strings.movies_cat_movies,
+    strings.movies_cat_genres,
+    strings.movies_cat_year,
+    strings.movies_cat_tags,
+  ];
 
   return (
     <div>
@@ -44,12 +50,3 @@ export default function Movies() {
     </div>
   );
 }
-
-
-// title: "Test Movie",
-// horiz_uri: "",
-// meta: {
-//     genre: genres[Math.floor(Math.random()*genres.length)],
-//     year: (1980+Math.floor(Math.random()*40)).toString(),
-//     tags: ['funny', 'superhero']
-// }
