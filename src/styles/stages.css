@@ -1,0 +1,98 @@
+#stage.stage-mini {
+  position: fixed;
+
+  bottom: 64px;
+  right: 64px;
+
+  z-index: 1000;
+  box-shadow: 0 12px 24px black;
+}
+
+.stage-mini #stage-player-video {
+  width: 360px;
+  height: 240px;
+  object-fit: cover;
+}
+
+#stage.stage-full {
+  position: sticky;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+}
+
+#stage.stage-full * {
+  background-color: royalblue;
+}
+
+.stage-full #stage-player-video {
+  width: 720px;
+  height: 480px;
+  object-fit: cover;
+}
+
+/* Handles the Header being hidden when in big screen mode*/
+.stage-full ~ header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  animation: header-init .5s ease;
+  animation-delay: 1.2s;
+  animation-fill-mode: forwards;
+}
+
+.stage-full ~ header > div {
+  animation: header-div-init .5s ease;
+  animation-delay: 1.2s;
+  animation-fill-mode: forwards;
+}
+
+.stage-full ~ header:hover {
+  animation: header-init-reverse .27s ease;
+}
+
+.stage-full ~ header:hover > div {
+  animation: header-div-init-reverse .27s ease;
+}
+
+@keyframes header-init {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes header-init-reverse {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes header-div-init {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes header-div-init-reverse {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
