@@ -4,6 +4,8 @@ import {
   Switch,
   Route,
   useParams,
+  useHistory,
+  useLocation,
 } from "react-router-dom";
 
 import { createGlobalState } from "react-hooks-global-state";
@@ -14,6 +16,9 @@ import "./App.css";
 
 import themeCollection from "./styles/ThemeCollection";
 import { useGlobalState } from "./state";
+import Stage from "./routes/user/Stage";
+import StageInitiator from "./routes/user/StageInitiator";
+import AuthValidator from "./components/AuthValidator";
 
 const Home = lazy(() => import("./routes/Home"));
 const Login = lazy(() => import("./routes/Login"));
@@ -39,12 +44,11 @@ export default function App() {
   const [fontSize, setFontSize] = useGlobalState("fontSize");
   const [font, setFont] = useGlobalState("font");
 
-  const [token, setToken] = useGlobalState("token");
-
   // This makes the loading of preferences work if you are on any page that isn't the preferences page.
   // Without it, loading only works if you're on preferences. You'd need to go to that page
   // in order to get it to update.
   useEffect(() => {
+
     // Load ThemeName from LocalStorage
     if (localStorageTheme) {
       let theme = themeCollection[localStorageTheme];
@@ -63,11 +67,12 @@ export default function App() {
     }
 
     // Load FontFamily from LocalStorage
-
     if (localStorageFont) {
       setFont(localStorageFont);
       document.documentElement.style.setProperty("font-family", localStorageFont);
     }
+
+
   }, []);
 
   return (
@@ -81,6 +86,10 @@ export default function App() {
           </div>
         }
       >
+
+        <AuthValidator />
+        <Stage></Stage>
+
         <header>
           <NavHeader></NavHeader>
         </header>
@@ -95,6 +104,9 @@ export default function App() {
           <Route path="/user/shows" component={Shows} />
           <Route path="/user/music" component={Music} />
           <Route path="/user/preferences" component={Preferences} />
+
+          <Route path="/user/stage/:newStage" component={StageInitiator} />
+          <Route path="/user/stage" />
 
           <Route path="/user/movie/:slug" />
           <Route path="/user/show/:slug" />
