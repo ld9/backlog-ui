@@ -74,7 +74,13 @@
     display: flex;
 }
 
-.modal-content-play {
+.modal-content-button-contain {
+    display: flex;
+    margin: auto;
+    margin-right: 0;
+}
+
+.modal-content-button {
     font-size: .5em;
     margin: auto;
     margin-right: 8px;
@@ -95,20 +101,20 @@
     padding: 8px 36px;
 }
 
-.modal-content-play * {
+.modal-content-button * {
     background-color: unset;
     z-index: 22;
 }
 
-.modal-content-play > span {
+.modal-content-button > span {
     margin: auto;
 }
 
-.modal-content-play:hover {
+.modal-content-button:hover {
     color: var(--text-color);
 }
 
-.modal-content-play::after {
+.modal-content-button::after {
     transition: all .25s ease;
 
     position: absolute;
@@ -122,15 +128,15 @@
     transform: scaleX(0);
 }
 
-.modal-content-play:hover::after {
+.modal-content-button:hover::after {
     transform: scaleX(1);
 }
 
-.modal-content-play svg {
+.modal-content-button svg {
     margin-left: 8px;
 }
 
-.modal-content-play * {
+.modal-content-button * {
     color: inherit;
 }
 

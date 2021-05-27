@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { createGlobalState } from "react-hooks-global-state";
 import SortedPanel from "../../components/SortedVideoPanel";
 import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
-import VideoFile from "../../types/VideoFile";
 import { BASE_API_URL } from "../../variables";
 
 

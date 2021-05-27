@@ -1,9 +1,10 @@
 import MediaItem from "../types/MediaItem";
 
 import "../styles/components/MovieModal.css";
-import { ArrowUpRight, Cross } from "akar-icons";
+import { ArrowUpRight, Cross, Edit, TextAlignLeft } from "akar-icons";
 import React from "react";
 import { strings } from "../strings";
+import { useGlobalState } from "../state";
 
 export default function MovieModal({
   media,
@@ -12,6 +13,8 @@ export default function MovieModal({
   media: MediaItem | null;
   setShowMedia: any;
 }) {
+  const [user, setUser] = useGlobalState("user");
+
   return (
     <div className="media-modal">
       <div
@@ -30,9 +33,21 @@ export default function MovieModal({
       <div className="modal-content">
         <div className="modal-content-head">
           <div className="modal-content-title">{media?.meta.title || "?"}</div>
-          <div className="modal-content-play">
-            <span>{strings.movies_popup_watch}</span>
-            <ArrowUpRight />
+          <div className="modal-content-button-contain">
+            {user.permissions.user.admin ? (
+              <div className="modal-content-button">
+                <span>{strings.movies_popup_edit}</span>
+                <Edit />
+              </div>
+            ) : null}
+            <div className="modal-content-button">
+              <span>{strings.movies_popup_watch}</span>
+              <ArrowUpRight />
+            </div>
+            <div className="modal-content-button">
+              <span>{strings.movies_popup_enqueue}</span>
+              <TextAlignLeft />
+            </div>
           </div>
         </div>
         <div className="modal-content-block">
