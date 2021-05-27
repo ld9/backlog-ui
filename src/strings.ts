@@ -12,6 +12,7 @@ export interface IStrings extends LocalizedStringsMethods {
     nav_admin: string;
     nav_settings: string;
     nav_logout: string;
+    nav_stage: string;
 
     dash_title: string;
     dash_listened: string;
@@ -24,6 +25,8 @@ export interface IStrings extends LocalizedStringsMethods {
     movies_cat_tags: string;
 
     movies_popup_watch: string;
+    movies_popup_enqueue: string;
+    movies_popup_edit: string;
     movies_popup_defaultDescription: string;
 
     // Shows
@@ -58,6 +61,7 @@ export const strings: IStrings = new LocalizedStrings({
         nav_admin: 'Admin',
         nav_settings: 'Preferences',
         nav_logout: 'Change User',
+        nav_stage: 'Current Stage',
 
         dash_title: 'Dashboard',
         dash_listened: 'Listen Again',
@@ -70,6 +74,8 @@ export const strings: IStrings = new LocalizedStrings({
         movies_cat_tags: 'Tags',
 
         movies_popup_watch: 'Watch',
+        movies_popup_enqueue: 'Add to Queue',
+        movies_popup_edit: 'Edit (Admin)',
         movies_popup_defaultDescription: 'This file does not have a description. Add one in the admin panel.',
 
         // Shows
