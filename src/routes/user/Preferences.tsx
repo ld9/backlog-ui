@@ -3,10 +3,14 @@ import ThemeSelector from "../../components/preferences/ThemeSelector";
 import FontSizeSelector from "../../components/preferences/FontSizeSelector";
 import FontFamilySelector from "../../components/preferences/FontFamilySelector";
 
+import '../../styles/home.css'
+
 import "../../styles/preferences.css";
 import { strings } from "../../strings";
 
 export default function Preferences() {
+
+
   return (
     <div>
       <div className="preference-section">
