@@ -1,6 +1,26 @@
 import { createGlobalState } from 'react-hooks-global-state';
 import { blankStage } from './types/StageType';
 
+export const blankUser = {
+    name: {
+        first: '',
+        last: ''
+    },
+    recent: {
+        audio: [],
+        video: []
+    },
+    permissions: {
+        user: {
+            admin: false,
+            paid: false,
+            verified: false
+        },
+        media: [],
+        collection: []
+    }
+}
+
 export const { useGlobalState } = createGlobalState({
     theme: localStorage.getItem("theme") || "bushido",
     font: "Roboto Mono",
@@ -8,23 +28,5 @@ export const { useGlobalState } = createGlobalState({
     tokenExpire: localStorage.getItem("user-token-expire"),
     token: localStorage.getItem("user-token"),
     stage: blankStage,
-    user: {
-        name: {
-            first: '',
-            last: ''
-        },
-        recent: {
-            audio: [],
-            video: []
-        },
-        permissions: {
-            user: {
-                admin: false,
-                paid: false,
-                verified: false
-            },
-            media: [],
-            collection: []
-        }
-    }
+    user: blankUser
 });
