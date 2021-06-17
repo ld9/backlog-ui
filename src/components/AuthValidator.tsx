@@ -6,11 +6,12 @@ import { checkTokenStillActive } from "../functions";
 import { useGlobalState } from "../state";
 import { BASE_API_URL } from "../variables";
 
-export default function AuthRouter() {
+export default function AuthValidator() {
   const history = useHistory();
   const location = useLocation();
 
   const [user, setUser] = useGlobalState("user");
+  const [token, setToken] = useGlobalState("token");
 
   useEffect(() => {
     const forceLoginExceptions = ["/", "/login", "/create-account"];
@@ -42,7 +43,7 @@ export default function AuthRouter() {
         }
       })();
     }
-  }, []);
+  }, [token, location.pathname]);
 
   return null;
 }
