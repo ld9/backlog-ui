@@ -1,17 +1,19 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { useGlobalState } from "../state";
+import { useEffect, useState } from "react";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
+import { blankUser, useGlobalState } from "../state";
 import { strings } from "../strings";
 
 import "../styles/navbar.css";
 
 export default function NavHeader() {
   let location = useLocation();
+  let history = useHistory();
 
   const [user, setUser] = useGlobalState("user");
+  const [token, setToken] = useGlobalState("token");
   const [stage, setStage] = useGlobalState("stage");
 
   let path = location.pathname;
-
   let hideNavBar = ["/", "/login", "/create-account"];
 
   return (
@@ -34,7 +36,7 @@ export default function NavHeader() {
               <NavLink activeClassName="active-link" to="/user/music">
                 {strings.nav_music}
               </NavLink>
-              {stage.name.length >= 1 ? (
+              {stage.queue.length >= 1 ? (
                 <NavLink activeClassName="active-link" to="/user/stage">
                   {strings.nav_stage} ({stage.name})
                 </NavLink>
@@ -50,7 +52,15 @@ export default function NavHeader() {
             <NavLink activeClassName="active-link" to="/user/preferences">
               {strings.nav_settings}
             </NavLink>
-            <NavLink to="/">{strings.nav_logout} ({user.name.first})</NavLink>
+            <NavLink
+              to="/"
+              onClick={() => {
+                setUser(blankUser);
+                setToken("");
+              }}
+            >
+              {strings.nav_logout} ({user.name.first})
+            </NavLink>
           </div>
         </div>
       )}
