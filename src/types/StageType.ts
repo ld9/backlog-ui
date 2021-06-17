@@ -5,12 +5,10 @@ export default interface Stage {
     name: string;
     watchers: Array<Watcher>;
     queue: Array<MediaItem>;
-    socket: null | any;
 }
 
 export const blankStage: Stage = {
-    name: '',
+    name: 'local',
     watchers: [],
     queue: [],
-    socket: null
 }

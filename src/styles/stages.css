@@ -1,3 +1,14 @@
+#stage-pseudo-header {
+  font-size: 1em;
+  padding: 12px 24px;
+  opacity: 0;
+}
+
+#stage {
+  display: flex;
+  flex-direction: column;
+}
+
 #stage.stage-mini {
   position: fixed;
 
@@ -10,8 +21,16 @@
 
 .stage-mini #stage-player-video {
   width: 360px;
-  height: 240px;
+  /* height: 240px; */
   object-fit: cover;
+}
+
+.stage-mini #stage-extra-content {
+  display: none;
+}
+
+.stage-mini #stage-pseudo-header {
+  display: none;
 }
 
 #stage.stage-full {
@@ -22,17 +41,49 @@
 
   width: 100vw;
   height: 100vh;
-  display: grid;
+  /* display: grid; */
 }
 
-#stage.stage-full * {
-  background-color: royalblue;
+.stage-full > #stage-content {
+  display: flex;
+  height: 100%;
+}
+
+.stage-full #stage-player {
+  max-width: calc(2/3*100%);
+  margin: auto 48px;
+  /* display: flex; */
 }
 
 .stage-full #stage-player-video {
-  width: 720px;
-  height: 480px;
-  object-fit: cover;
+  max-width: 1280px;
+}
+
+.stage-full #stage-extra-content {
+  width: calc(1/3*100%);
+
+  padding: 24px 48px 24px 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-full #stage-extra-content > div {
+  /* height: calc(2/3*100%); */
+  width: 100%;
+
+  padding: 12px 0 24px 0;
+  border-top: 2px solid var(--main-color);
+}
+
+.stage-full #stage-extra-content > div:first-child {
+  border-top: none;
+}
+
+.stage-full #stage-extra-content > div > h3 {
+  padding-bottom: 12px;
+  font-weight: bold;
+  color: var(--main-color);
 }
 
 /* Handles the Header being hidden when in big screen mode*/
@@ -41,6 +92,8 @@
   top: 0;
   left: 0;
   width: 100%;
+
+  /* filter: brightness(0.2); */
 
   animation: header-init .5s ease;
   animation-delay: 1.2s;
@@ -52,7 +105,7 @@
   animation-delay: 1.2s;
   animation-fill-mode: forwards;
 }
-
+/* 
 .stage-full ~ header:hover {
   animation: header-init-reverse .27s ease;
 }
@@ -95,4 +148,9 @@
   to {
     transform: none;
   }
+} */
+
+
+#stage.stage-inactive {
+  display: none;
 }

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { watchForResponse, socket } from "../../socket";
 import { useGlobalState } from "../../state";
+import Stage from "../../types/StageType";
 
 export default function StageInitiator() {
   let { newStage } = useParams() as {
@@ -9,22 +11,48 @@ export default function StageInitiator() {
 
   let history = useHistory();
 
-  let [stage, setStage] = useGlobalState('stage');
+  let [stage, setStage] = useGlobalState("stage");
+
+  async function doJoin(updatedStage: Stage) {
+    socket.emit("request-join", stage.name);
+    await watchForResponse('inform-join');
+    
+    setStage(updatedStage);
+    history.replace("/user/stage");
+
+    return;
+  } 
 
   useEffect(() => {
     if (newStage !== "") {
-        
-        //TODO: look up the stage from the server
-        const updatedStage = {
-            ...stage,
-            name: newStage
-        }
+      let updatedStage;
 
-        setStage(updatedStage);
-        history.replace('/user/stage');
+      console.log(stage);
+
+      if (newStage === "create") {
+        updatedStage = {
+          ...stage,
+          name: (Math.random() * 9999999).toString(36).substring(0, 4),
+        };
+      } else {
+        updatedStage = {
+          ...stage,
+          name: newStage,
+        };
+      }
+
+      console.log('doing join')
+      doJoin(updatedStage);
+      console.log('join did')
+
 
     }
   }, [setStage, newStage, history]);
 
-  return <div>Trying to get you synced up with /{newStage}/...</div>;
+  return <div>
+    <div>
+      <h2>Connecting to Server</h2>
+      <p>Trying to {newStage == 'create' ? 'create a new room for you' : `connect you to the stage "${newStage}"`}</p>
+    </div>
+  </div>;
 }

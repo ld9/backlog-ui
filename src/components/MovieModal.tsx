@@ -1,10 +1,10 @@
 import MediaItem from "../types/MediaItem";
 
 import "../styles/components/MovieModal.css";
-import { ArrowUpRight, Cross, Edit, TextAlignLeft } from "akar-icons";
 import React from "react";
 import { strings } from "../strings";
 import { useGlobalState } from "../state";
+import { IconArrowsMinimize, IconArrowUpRight, IconPencil, IconRowInsertBottom } from "@tabler/icons";
 
 export default function MovieModal({
   media,
@@ -14,6 +14,19 @@ export default function MovieModal({
   setShowMedia: any;
 }) {
   const [user, setUser] = useGlobalState("user");
+  const [stage, setStage] = useGlobalState("stage");
+
+  const addToQueueEnd = () => {
+    if (media !== null) {
+      setStage({
+        ...stage,
+        queue: [
+          ...stage.queue,
+          media
+        ]
+      })
+    }
+  }
 
   return (
     <div className="media-modal">
@@ -27,7 +40,7 @@ export default function MovieModal({
             setShowMedia(false);
           }}
         >
-          <Cross />
+          <IconArrowsMinimize />
         </div>
       </div>
       <div className="modal-content">
@@ -37,16 +50,16 @@ export default function MovieModal({
             {user.permissions.user.admin ? (
               <div className="modal-content-button">
                 <span>{strings.movies_popup_edit}</span>
-                <Edit />
+                <IconPencil />
               </div>
             ) : null}
             <div className="modal-content-button">
               <span>{strings.movies_popup_watch}</span>
-              <ArrowUpRight />
+              <IconArrowUpRight />
             </div>
-            <div className="modal-content-button">
+            <div className="modal-content-button" onClick={addToQueueEnd}>
               <span>{strings.movies_popup_enqueue}</span>
-              <TextAlignLeft />
+              <IconRowInsertBottom />
             </div>
           </div>
         </div>

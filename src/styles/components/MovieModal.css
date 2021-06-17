@@ -166,3 +166,7 @@
 .modal-content-tags:not(:empty)::before {
     content: 'tg: '
 }
+
+svg.icon-tabler {
+    margin-top: 4px;
+}
