@@ -110,17 +110,8 @@ export default function App() {
 
           <Route path="/user/movie/:slug" />
           <Route path="/user/show/:slug" />
-          <Route path="/user/listen/:slug" component={Listen} />
         </Switch>
       </Suspense>
     </Router>
   );
-}
-
-function Listen() {
-  let { slug } = useParams() as {
-    slug: "none";
-  };
-
-  return <div>Listening to {slug}</div>;
 }
