@@ -14,8 +14,8 @@ export default function ThemeInfo() {
   return (
     <div className="preference-section">
       <div className="preference-heading">
-        <h2>{strings.settings_font_title}</h2>
-        <p>{strings.settings_font_desc}</p>
+        <h2>{strings.settings_size_title}</h2>
+        <p>{strings.settings_size_desc}</p>
       </div>
 
       <div className="preference-contents">

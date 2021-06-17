@@ -16,8 +16,8 @@ export default function ThemeInfo() {
   const fonts = [
     "Arial",
     "Verdana",
-	"Windows, Segoe UI, sans-serif",
-	"MacOS, San Francisco, sans-serif",
+    "Windows, Segoe UI, sans-serif",
+    "MacOS, San Francisco, sans-serif",
     "Roboto Mono",
     "Courier",
     "Times New Roman",
