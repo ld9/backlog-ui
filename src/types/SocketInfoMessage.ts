@@ -9,7 +9,8 @@ export enum SocketBeaconMessageType {
     SKIP = "SKIP",
     CHANGE = "CHANGE",
     TIME = "TIME",
-    ENQUEUE = "ENQUEUE",
+    QUEUE = "QUEUE",
+    CURRENTQUEUE = "CURRENTQUEUE",
     DEQUEUE = "DEQUEUE",
     ALTER = "ALTER",
     MESSAGE = "MESSAGE",
@@ -48,4 +49,14 @@ export interface MessageResume extends BeaconMessage {
 export interface MessageSeek extends BeaconMessage {
     type: SocketBeaconMessageType.SEEK,
     to: number;
+}
+
+export interface MessageEnqueue extends BeaconMessage {
+    type: SocketBeaconMessageType.QUEUE,
+    queue: {};
+}
+
+export interface MessageCurrentQueue extends BeaconMessage {
+    type: SocketBeaconMessageType.CURRENTQUEUE,
+    queue: [];
 }

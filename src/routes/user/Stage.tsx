@@ -1,14 +1,19 @@
+import {
+  IconArrowRightSquare,
+  IconGitPullRequest,
+  IconPlayerPause,
+  IconPlayerPlay,
+} from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { socket } from "../../socket";
 import { useGlobalState } from "../../state";
 
 import "../../styles/stages.css";
+import MediaItem from "../../types/MediaItem";
 import {
   MessageInform,
   SocketBeaconMessageType,
-  Payload,
-  MessageSeek,
 } from "../../types/SocketInfoMessage";
 
 export default function Stage() {
@@ -25,10 +30,7 @@ export default function Stage() {
   // Makes sure that re-renders happen when needed
   const [msgCount, setMsgCount] = useState(0);
 
-  const [contentQueue, setContentQueue] = useState([]);
   const [watchers, setWatchers] = useState({});
-  const [currentTime, setCurrentTime] = useState(0);
-  const [currentContent, setCurrentContent] = useState("");
 
   const currentBuffer = () => {
     let buffered = [];
@@ -76,87 +78,32 @@ export default function Stage() {
     }
   }
 
-  function sendInformMessage() {
-    if (video.current != null) {
-      const info: MessageInform = {
-        from: socket.id,
-        type: SocketBeaconMessageType.INFORM,
-        payload: {
-          time: video.current.currentTime,
-          playing: !video.current.paused,
-          name: user.name.first,
-          buffer: currentBuffer(),
-        },
-      };
-      socket.emit("inform-peer-self", JSON.stringify(info));
-    }
-  }
-
-  // function bringMeBack() {
-  //   function doTimingSync() {
-  //     const totalTime: number = Object.values(watchers).reduce(
-  //       (a: any, b: any) => a.status.time + b.status.time
-  //     ) as number;
-  //     const avg = totalTime / Object.keys(watchers).length;
-
-  //     if (video.current !== null) {
-  //       if (Math.abs(video.current.currentTime - avg) > 1) {
-  //         console.log("outofsync");
-  //         // requestPause();
-  //         const min = Math.min.apply(
-  //           Math,
-  //           Object.values(watchers).map((watcher: any) => watcher.status.time)
-  //         );
-  //         video.current.currentTime = min;
-  //         sendInformMessage();
-  //       }
-  //     }
-  //   }
-  // }
-
   // When the Video element changes, set the video's event listeners
   useEffect(() => {
-    let timeUpdateDelay = 0;
-    let lastSeekTo = 0;
+    function sendInformMessage() {
+      if (video.current != null) {
+        const info: MessageInform = {
+          from: socket.id,
+          type: SocketBeaconMessageType.INFORM,
+          payload: {
+            time: video.current.currentTime,
+            playing: !video.current.paused,
+            name: user.name.first,
+            buffer: currentBuffer(),
+          },
+        };
+        socket.emit("inform-peer-self", JSON.stringify(info));
+      }
+    }
 
     if (video.current != null) {
       video.current.ontimeupdate = function () {
         if (video.current != null) {
-          setCurrentTime(video.current.currentTime);
-
-          // if (timeUpdateDelay++ > 4) {
-          // timeUpdateDelay = 0;
           sendInformMessage();
-          // }
         }
       };
-
-      // video.current.onpause = function () {
-      //   requestPause();
-      //   sendInformMessage();
-      // };
-
-      // video.current.onplay = function () {
-      //   requestResume();
-      //   sendInformMessage();
-      // };
-
-      // video.current.onseeked = function (event) {
-      //   if (
-      //     video.current != null &&
-      //     lastSeekTo !== video.current.currentTime &&
-      //     !ignoreThisSeek
-      //   ) {
-      //     lastSeekTo = video.current.currentTime;
-      //     console.log("seeked");
-      //     video.current.pause();
-      //     // requestPause();
-      //     requestSeek();
-      //     // sendInformMessage();
-      //   }
-      // };
     }
-  }, [video]);
+  }, [video, user]);
 
   // Sets the activity of the videoplayer (large/small)
   useEffect(() => {
@@ -166,17 +113,48 @@ export default function Stage() {
 
   // Socket listeners - only make them once!!!
   useEffect(() => {
-    // setInterval(() => {
-    //   if (
-    //     watchers != null &&
-    //     Object.keys(watchers).length >= 2 &&
-    //     video.current !== null
-    //   ) {
-    //     console.log("doing timing sync");
-    //     doTimingSync();
-    //   }
-    // }, 2000);
     let messageCount = 0;
+
+    socket.off("inform-join");
+    socket.off("inform-peer");
+
+    socket.on("inform-join", (joined) => {
+      const joiner = JSON.parse(joined);
+
+      console.log("joiner", joiner);
+
+      let temp = watchers as { [key: string]: any };
+      temp[joiner.user] = {
+        status: {
+          name: joiner.display,
+          time: 0,
+          buffer: [],
+          playing: false,
+        },
+      };
+
+      setWatchers(temp);
+
+      socket.emit(
+        "inform-peer",
+        JSON.stringify({
+          type: SocketBeaconMessageType.CURRENTQUEUE,
+          queue: stage.queue,
+        })
+      );
+
+      const info: MessageInform = {
+        from: socket.id,
+        type: SocketBeaconMessageType.INFORM,
+        payload: {
+          time: 0,
+          playing: false,
+          name: user.name.first,
+          buffer: [],
+        },
+      };
+      socket.emit("inform-peer-self", JSON.stringify(info));
+    });
 
     socket.on("inform-peer", (beacon) => {
       const message: MessageInform = JSON.parse(beacon);
@@ -202,17 +180,39 @@ export default function Stage() {
           }
         }
       } else if (message.type === SocketBeaconMessageType.SEEK) {
-        console.log("got seek request");
         if (video.current != null) {
           video.current.currentTime = (message as any).to;
+        }
+      } else if (message.type === SocketBeaconMessageType.QUEUE) {
+        let newItem = (message as any).queue;
+        setStage({
+          ...stage,
+          queue: [...stage.queue, newItem],
+        });
+      } else if (message.type === SocketBeaconMessageType.CURRENTQUEUE) {
+        let queue = (message as any).queue;
+        if (stage.queue.length === 0) {
+          setStage({
+            ...stage,
+            queue,
+          });
         }
       }
 
       setMsgCount(++messageCount);
-
-      // console.log(watchers);
     });
-  }, []);
+  }, [stage, stage.queue]);
+
+  const formattedSeconds = (seconds: number = 0) => {
+    const hhmmss: string = new Date(Math.floor(seconds) * 1000)
+      .toISOString()
+      .substr(11, 8);
+    if (hhmmss.substr(0, 2) === "00") {
+      // if (hhmmss.substr(2, 2) === "00") {}
+      return hhmmss.substr(3);
+    }
+    return hhmmss;
+  };
 
   return (
     <div
@@ -236,10 +236,19 @@ export default function Stage() {
             <h3>Global Controls</h3>
             <button
               onClick={() => {
+                if (
+                  stage.name !== "local" &&
+                  !window.confirm("Really abandon this room?")
+                ) {
+                  return;
+                }
+
                 history.push("/user/stage/create");
               }}
             >
-              Create joinable room
+              {stage.name === "local"
+                ? "Create joinable room"
+                : "Abandon & create new room"}
             </button>
             <button onClick={requestPause}>Pause All</button>
             <button onClick={requestResume}>Play All</button>
@@ -250,19 +259,37 @@ export default function Stage() {
               <h3>Stage Audience</h3>
               {Object.values(watchers).map(
                 (watcher: any /* FIX ME!! */, key: number) => (
-                  <div key={key}>
-                    {watcher.status.name}.
-                    {Object.keys(watchers)[key].substring(0, 4)}:{" "}
-                    {watcher.status.time} (
-                    {watcher.status.playing ? "playing" : "paused"})
+                  <div key={key} className="stage-watcher">
+                    <div className="stage-watcher-name">
+                      {watcher.status.name}
+                      <span className="watcher-uid-tag">
+                        {Object.keys(watchers)[key].substring(0, 4)}
+                        {Object.keys(watchers)[key] === socket.id
+                          ? " (You)"
+                          : null}
+                      </span>
+                    </div>
+                    <div className="stage-watcher-time">
+                      {formattedSeconds(watcher.status.time)}
+                    </div>
+                    <div className="stage-watcher-pause-contain">
+                      {watcher.status.playing ? (
+                        <IconPlayerPlay></IconPlayerPlay>
+                      ) : (
+                        <IconPlayerPause></IconPlayerPause>
+                      )}
+                    </div>
                     <button
+                      title={`Jump to ${watcher.status.name}'s time in the video`}
+                      className="button-has-svg"
                       onClick={() => {
                         if (video.current != null) {
+                          // console.log(watcher.status.time);
                           video.current.currentTime = watcher.status.time;
                         }
                       }}
                     >
-                      Jump to Time
+                      <IconArrowRightSquare></IconArrowRightSquare>
                     </button>
                   </div>
                 )
@@ -273,11 +300,11 @@ export default function Stage() {
           <div id="stage-queue">
             <h3>Playback Queue</h3>
             <div id="stage-queue-list">
-              {stage.queue.map((media, idx) =>
-                <div className='stage-queue-item' key={idx}>
+              {stage.queue.map((media, idx) => (
+                <div className="stage-queue-item" key={idx}>
                   {media.meta.title} - {media.uri}
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>

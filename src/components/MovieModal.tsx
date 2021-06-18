@@ -1,10 +1,11 @@
 import MediaItem from "../types/MediaItem";
 
 import "../styles/components/MovieModal.css";
-import React from "react";
 import { strings } from "../strings";
 import { useGlobalState } from "../state";
 import { IconArrowsMinimize, IconArrowUpRight, IconPencil, IconRowInsertBottom } from "@tabler/icons";
+import { socket } from "../socket";
+import { SocketBeaconMessageType } from "../types/SocketInfoMessage";
 
 export default function MovieModal({
   media,
@@ -24,7 +25,14 @@ export default function MovieModal({
           ...stage.queue,
           media
         ]
-      })
+      } as any);
+
+
+      socket.emit('inform-peer', JSON.stringify({
+        from: socket.id,
+        type: SocketBeaconMessageType.QUEUE,
+        queue: media
+      }))
     }
   }
 

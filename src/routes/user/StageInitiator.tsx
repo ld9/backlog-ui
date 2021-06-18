@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { watchForResponse, socket } from "../../socket";
 import { useGlobalState } from "../../state";
+import { MessageInform, SocketBeaconMessageType } from "../../types/SocketInfoMessage";
 import Stage from "../../types/StageType";
 
 export default function StageInitiator() {
@@ -12,22 +13,26 @@ export default function StageInitiator() {
   let history = useHistory();
 
   let [stage, setStage] = useGlobalState("stage");
+  let [user, setUser] = useGlobalState("user");
 
-  async function doJoin(updatedStage: Stage) {
-    socket.emit("request-join", stage.name);
-    await watchForResponse('inform-join');
-    
-    setStage(updatedStage);
-    history.replace("/user/stage");
-
-    return;
-  } 
+  
 
   useEffect(() => {
+
+    async function doJoin(updatedStage: Stage) {
+      socket.emit("request-join", {stage: updatedStage.name, user: user.name.first});
+      await watchForResponse('inform-join');
+      
+      setStage(updatedStage);
+      history.replace("/user/stage");
+  
+      return;
+    } 
+
     if (newStage !== "") {
       let updatedStage;
 
-      console.log(stage);
+      // console.log(stage);
 
       if (newStage === "create") {
         updatedStage = {
@@ -41,13 +46,13 @@ export default function StageInitiator() {
         };
       }
 
-      console.log('doing join')
+      // console.log('doing join')
       doJoin(updatedStage);
-      console.log('join did')
+      // console.log('join did')
 
 
     }
-  }, [setStage, newStage, history]);
+  }, [setStage, newStage, history, user]);
 
   return <div>
     <div>

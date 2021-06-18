@@ -57,6 +57,7 @@
 
 .stage-full #stage-player-video {
   max-width: 1280px;
+  box-shadow: 0 0 24px #000;
 }
 
 .stage-full #stage-extra-content {
@@ -105,6 +106,62 @@
   animation-delay: 1.2s;
   animation-fill-mode: forwards;
 }
+
+.watcher-uid-tag {
+  color: var(--main-color);
+  font-size: .7em;
+  margin-left: 4px;
+  font-variant: small-caps;
+}
+
+.stage-full button {
+  margin: 4px;
+  padding: 8px 12px;
+
+  background-color: var(--main-color);
+  color: var(--bg-color);
+  cursor: pointer;
+  transition: .3s;
+
+  border: none;
+}
+
+.stage-full button:hover {
+  box-shadow: 0 2px 8px #000;
+  color: var(--text-color);
+  background-color: var(--sub-color);
+}
+
+.stage-full .button-has-svg {
+  padding: 0 12px;
+}
+
+.stage-full button * {
+  background-color: inherit;
+  color: inherit;
+}
+
+.stage-watcher {
+  display: flex;
+}
+
+.stage-watcher-pause-contain {
+  display: flex;
+}
+
+.stage-watcher-pause-contain > svg {
+  margin: auto 8px !important;
+}
+
+.stage-watcher-name {
+  margin: auto 12px auto 0;
+}
+
+.stage-watcher-time {
+  margin: auto 0 auto auto;
+}
+
+
 /* 
 .stage-full ~ header:hover {
   animation: header-init-reverse .27s ease;

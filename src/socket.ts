@@ -11,11 +11,11 @@ export const subscribe = (message: string, callback: any) => {
 };
 
 export const watchForResponse = async (watch: string): Promise<any> => {
-    console.log('---watching');
+    // console.log('---watching');
 
     let promise = await new Promise((resolve, reject) => {
         socket.on(watch, (res) => {
-            console.log('---on-requestSubbed');
+            // console.log('---on-requestSubbed');
             resolve(res);
         });
     })
@@ -26,5 +26,5 @@ export const watchForResponse = async (watch: string): Promise<any> => {
 
 
 socket.on('inform-join', (res) => {
-    console.log(res);
+    // console.log('got a join res', res);
 })
