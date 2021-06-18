@@ -6,8 +6,12 @@ import VideoThumb from '../../components/VideoThumb';
 
 import "../../styles/userhome.css";
 import { strings } from '../../strings';
+import SocketTest from '../../components/SocketTest';
+import { useHistory } from 'react-router-dom';
 
 export default function Dashboard() {
+
+    const history = useHistory();
     
     let demoTrack: AudioFile = {
         title: "Example Song Title",
@@ -52,6 +56,9 @@ export default function Dashboard() {
                         <VideoThumb key={i} video={demoVideo}></VideoThumb>
                     )}
                 </div> */}
+
+                <SocketTest></SocketTest>
+                <button onClick={() => {history.push('/user/stage/test')}}>Join stage "test"</button>
             </div>
         </div>
     );

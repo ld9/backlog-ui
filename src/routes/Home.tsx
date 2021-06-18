@@ -7,6 +7,7 @@ import '../styles/home.css'
 export default function Home() {
 
     const [dummy, dummy_s] = useState(false);
+    (window as any).strings = strings;
 
     return (
         <div className='grid-container'>

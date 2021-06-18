@@ -13,6 +13,7 @@ export interface IStrings extends LocalizedStringsMethods {
     nav_settings: string;
     nav_logout: string;
     nav_stage: string;
+    nav_stage_create: string;
 
     dash_title: string;
     dash_listened: string;
@@ -62,6 +63,7 @@ export const strings: IStrings = new LocalizedStrings({
         nav_settings: 'Preferences',
         nav_logout: 'Change User',
         nav_stage: 'Current Stage',
+        nav_stage_create: 'New Stage',
 
         dash_title: 'Dashboard',
         dash_listened: 'Listen Again',

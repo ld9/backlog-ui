@@ -1,6 +1,5 @@
 import {
   IconArrowRightSquare,
-  IconGitPullRequest,
   IconPlayerPause,
   IconPlayerPlay,
 } from "@tabler/icons";
@@ -10,7 +9,6 @@ import { socket } from "../../socket";
 import { useGlobalState } from "../../state";
 
 import "../../styles/stages.css";
-import MediaItem from "../../types/MediaItem";
 import {
   MessageInform,
   SocketBeaconMessageType,
