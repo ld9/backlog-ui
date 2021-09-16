@@ -4,16 +4,12 @@ import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 
-
 export default function Movies() {
-  
   const [token, setToken] = useGlobalState("token");
   const [userMovies, setUserMovies] = useState([]);
 
   useEffect(() => {
-    // Do it async, boys
     (async () => {
-
       const media = await fetch(`${BASE_API_URL}/api/media`, {
         headers: {
           authorization: `Bearer ${token}`,
@@ -21,15 +17,20 @@ export default function Movies() {
       });
 
       const json = await media.json();
-      const videos = json.filter((item: { type: string; }) => {
+      const videos = json.filter((item: { type: string }) => {
+        // Try/catch filters if the user has an item which has been deleted/doesn't exist (i think)
+        try {
           let type: string = item.type;
-          return type.startsWith('video');
-      })
+          return type.startsWith("video");
+        } catch {
+          return false;
+        }
+      });
 
       setUserMovies(videos);
     })();
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   var groupingKeys: string[] = [
