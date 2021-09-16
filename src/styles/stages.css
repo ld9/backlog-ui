@@ -56,7 +56,7 @@
 }
 
 .stage-full #stage-player-video {
-  max-width: 1280px;
+  width: 1280px;
   box-shadow: 0 0 24px #000;
 }
 
