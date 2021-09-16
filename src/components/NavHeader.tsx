@@ -14,11 +14,11 @@ export default function NavHeader() {
   const [stage, setStage] = useGlobalState("stage");
 
   let path = location.pathname;
-  let hideNavBar = ["/", "/login", "/create-account"];
+  let hideNavBar = ["/", "/login", "/create-account", "/request-reset-password", "/reset-password"];
 
   return (
     <div>
-      {hideNavBar.includes(path) ? null : (
+      {hideNavBar.includes(path) || path.includes("/reset-password") ? null : (
         <div id="nav-container">
           <div id="nav-title-media">
             <div id="nav-user-home">

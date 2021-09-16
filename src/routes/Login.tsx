@@ -6,6 +6,7 @@ import { createGlobalState } from "react-hooks-global-state";
 import "../styles/login.css";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
+import { NavLink } from "react-router-dom";
 
 export default function Login() {
   let history = useHistory();
@@ -15,7 +16,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [wrongPass, setWrongPass] = useState(false);
+  const [wrongPass, setWrongPass] = useState(0);
 
   useEffect(() => {
 
@@ -43,7 +44,7 @@ export default function Login() {
         // If this skips, the user will see an empty dashboard.
         // (Effectively Pointless)
         if (data.auth === false || !data.token) {
-          setWrongPass(true);
+          setWrongPass(wrongPass + 1);
           return;
         }
 
@@ -85,8 +86,13 @@ export default function Login() {
           </div>
           <div>
             {wrongPass ? (
-              <div className="login-fail">Incorrect Email or Password</div>
+              <div className="login-fail">Incorrect Email or Password (Failures Logged: {wrongPass})</div>
             ) : null}
+            <div className="password-reset-button">
+              <NavLink to="request-reset-password">
+                Request Password Reset
+              </NavLink>
+            </div>
             <input type="submit" value="Login"></input>
           </div>
         </form>

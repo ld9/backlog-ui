@@ -26,6 +26,9 @@ const Login = lazy(() => import("./routes/Login"));
 const Signup = lazy(() => import("./routes/Signup"));
 // const Authenticated = lazy(() => import('./routes/Authenticated'));
 
+const RequestResetPassword = lazy(() => import("./routes/RequestResetPassword"));
+const ResetPassword = lazy(() => import("./routes/ResetPassword"));
+
 const Movies = lazy(() => import("./routes/user/Movies"));
 const Music = lazy(() => import("./routes/user/Music"));
 const Shows = lazy(() => import("./routes/user/Shows"));
@@ -100,6 +103,8 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={Signup} />
+          <Route exact path="/request-reset-password" component={RequestResetPassword} />
+          <Route exact path="/reset-password/:token" component={ResetPassword} />
 
           <Route exact path="/user" component={Dashboard} />
           <Route path="/user/movies" component={Movies} />
