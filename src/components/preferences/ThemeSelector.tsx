@@ -9,6 +9,8 @@ import ThemeButton from "./ThemeButton";
 export default function ThemeInfo() {
   const [themeName, setThemeName] = useGlobalState("theme");
 
+  const [showMoreThemes, setShowMoreThemes] = useState(false);
+
   useEffect(() => {
     let theme = themeCollection[themeName];
     localStorage.setItem("themeName", themeName);
@@ -31,17 +33,38 @@ export default function ThemeInfo() {
           {strings.settings_theme_current}:{" "}
           <span className="theme-highlight">{themeName}</span>
         </div>
-        <div className="theme-selection">
-          {Object.keys(themeCollection).map((themeName, index) => {
-            return (
+
+        {!showMoreThemes ? (
+          <div>
+            <div className="theme-selection">
               <ThemeButton
-                key={index}
-                themeName={themeName}
+                themeName="rose_pine_moon"
                 setTheme={setThemeName}
               ></ThemeButton>
-            );
-          })}
-        </div>
+              <ThemeButton
+                themeName="9009"
+                setTheme={setThemeName}
+              ></ThemeButton>
+              <ThemeButton
+                themeName="matrix"
+                setTheme={setThemeName}
+              ></ThemeButton>
+            </div>
+            <button onClick={() => {setShowMoreThemes(true)}}>Show Bonus Themes</button>
+          </div>
+        ) : (
+          <div className="theme-selection extra">
+            {Object.keys(themeCollection).map((themeName, index) => {
+              return (
+                <ThemeButton
+                  key={index}
+                  themeName={themeName}
+                  setTheme={setThemeName}
+                ></ThemeButton>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
