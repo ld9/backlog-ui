@@ -19,6 +19,7 @@ import { useGlobalState } from "./state";
 import Stage from "./routes/user/Stage";
 import StageInitiator from "./routes/user/StageInitiator";
 import AuthValidator from "./components/AuthValidator";
+import ToastManager from "./components/ToastManager";
 
 const Home = lazy(() => import("./routes/Home"));
 const Login = lazy(() => import("./routes/Login"));
@@ -113,6 +114,8 @@ export default function App() {
           <Route path="/user/movie/:slug" />
           <Route path="/user/show/:slug" />
         </Switch>
+
+        <ToastManager></ToastManager>
       </Suspense>
     </Router>
   );

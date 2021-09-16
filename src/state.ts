@@ -1,5 +1,7 @@
 import { createGlobalState } from 'react-hooks-global-state';
 import { blankStage } from './types/StageType';
+import ToastPackage from './types/ToastType';
+
 
 export const blankUser = {
     name: {
@@ -21,6 +23,8 @@ export const blankUser = {
     }
 }
 
+let blankToasts: Array<ToastPackage> = [];
+
 export const { useGlobalState } = createGlobalState({
     theme: localStorage.getItem("theme") || "bushido",
     font: "Roboto Mono",
@@ -28,5 +32,6 @@ export const { useGlobalState } = createGlobalState({
     tokenExpire: localStorage.getItem("user-token-expire"),
     token: localStorage.getItem("user-token"),
     stage: blankStage,
-    user: blankUser
+    user: blankUser,
+    toasts: blankToasts
 });
