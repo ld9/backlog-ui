@@ -156,16 +156,33 @@
 }
 
 .modal-content-genre:not(:empty)::before {
-    content: 'ge: ';
+    content: 'g: ';
 }
 
 .modal-content-released:not(:empty)::before {
-    content: 'ye: ';
+    content: 'y: ';
 }
 
-.modal-content-tags:not(:empty)::before {
-    content: 'tg: '
+.modal-content-tags:not(:empty) > div::before {
+    content: 't: '
 }
+
+.modal-content-tags {
+    margin: unset !important;
+    padding: unset !important;
+    background-color: unset !important;
+
+    display: flex;
+}
+
+.modal-content-tags > div {
+    margin: 0 8px 4px 0;
+    background-color: var(--sub-color);
+    padding: 4px;
+    
+    font-style: italic;
+}
+
 
 svg.icon-tabler {
     margin-top: 4px;
