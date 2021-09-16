@@ -35,6 +35,9 @@ export interface IStrings extends LocalizedStringsMethods {
     // Music
 
     // Admin
+    admin_title: string;
+
+    // Settings/Preferences
 
     settings_title: string;
 
@@ -85,6 +88,8 @@ export const strings: IStrings = new LocalizedStrings({
         // Music
 
         // Admin
+
+        admin_title: 'Admin Panel',
 
         settings_title: 'Settings',
 

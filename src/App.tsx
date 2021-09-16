@@ -29,6 +29,7 @@ const Movies = lazy(() => import("./routes/user/Movies"));
 const Music = lazy(() => import("./routes/user/Music"));
 const Shows = lazy(() => import("./routes/user/Shows"));
 
+const Admin = lazy(() => import("./routes/user/Admin"));
 const Preferences = lazy(() => import("./routes/user/Preferences"));
 
 const Dashboard = lazy(() => import("./routes/user/Dashboard"));
@@ -103,6 +104,7 @@ export default function App() {
           <Route path="/user/movies" component={Movies} />
           <Route path="/user/shows" component={Shows} />
           <Route path="/user/music" component={Music} />
+          <Route path="/user/admin" component={Admin} />
           <Route path="/user/preferences" component={Preferences} />
 
           <Route path="/user/stage/:newStage" component={StageInitiator} />
