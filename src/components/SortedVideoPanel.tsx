@@ -42,20 +42,20 @@ export default function SortedPanel({
           a.tags.forEach((b: any) => {
             flag = true;
             let c: any = JSON.parse(JSON.stringify(a));
-            c.meta.primaryTag = b;
+            c.sortTag = b;
             _tempSingleTagItems.push(c);
           });
 
           if (!flag) {
             let c: any = JSON.parse(JSON.stringify(a));
-            c.meta.primaryTag = "Untagged";
+            c.sortTag = "Untagged";
             _tempSingleTagItems.push(c);
           }
         });
 
         /* The list will be sorted by the tags. */
         _sortedItems = _tempSingleTagItems.sort((a, b) =>
-          a.meta.primaryTag.localeCompare(b.meta.primaryTag)
+          a.sortTag.localeCompare(b.sortTag)
         );
 
         break;
@@ -82,14 +82,15 @@ export default function SortedPanel({
 
   const renderPanelItems = () => {
     let content: any[] = [];
-    let prevMeta = "";
+    let prevMeta: string | number = "";
 
     itemList.forEach(
       (video: MediaItem /* VideoFile* any for primaryTag. */, i: number) => {
-        let thisMeta;
+        let thisMeta: string | number;
         switch (selectedGrouping) {
           case 3:
-            thisMeta = video.meta.primaryTag || "?";
+            // thisMeta = (video.tags && video.tags.length > 0) ? video.tags[0] : "?";
+            thisMeta = video.sortTag;
             break;
           case 2:
             thisMeta = video.meta.released || 0;
@@ -99,12 +100,12 @@ export default function SortedPanel({
             break;
           default:
             // [0] group by first letter
-            thisMeta = video.meta.title[0];
+            thisMeta = video.meta.title[0].toLowerCase();
         }
 
         if (prevMeta !== thisMeta) {
           content.push(
-            <div className="grouping-separator" key={i + 1333337}>
+            <div className="grouping-separator" key={i + 1000000}>
               <div>{thisMeta}</div>
             </div>
           );
@@ -132,7 +133,7 @@ export default function SortedPanel({
       ) : null}
 
       <div className="sorted-panel-inside">
-        <h1>{groupingKeys[0]}</h1>
+        <h1>{groupingKeys[selectedGrouping]}</h1>
         <div className="sorted-content">
           <div className="group-select-menu">
             {groupingKeys.map((groupKey, i) => (
