@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
+    "react-dropzone": "^11.3.4",
     "react-hooks-global-state": "^1.0.1"
   }
 }
