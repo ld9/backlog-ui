@@ -12,4 +12,5 @@ export default interface MediaItem {
     tags: [];
     type: string;
     sortTag: any;
+    previewOnly?: boolean;
 }
