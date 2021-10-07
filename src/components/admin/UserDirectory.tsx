@@ -3,18 +3,28 @@ import { useEffect, useState } from "react";
 
 import { useGlobalState } from "../../state";
 import { BASE_API_URL } from "../../variables";
+import EditUserModal from "./EditUserModal";
 
 export default function UserDirectory() {
   const [token, setToken] = useGlobalState("token");
-
   const [users, setUsers] = useState<Array<any>>([]);
+  const [editingUser, setEditingUser] = useState<null | Object>(null);
+  const [refreshUserList, setRefreshUserList] = useState(0);
+
+  const refresh = () => {
+    setRefreshUserList(refreshUserList + 1);
+  }
+
+  const exitEdit = () => {
+    setEditingUser(null);
+  }
 
   // Run on mount
   useEffect(() => {
     fetch(`${BASE_API_URL}/user/directory`)
       .then((res) => res.json())
       .then((json) => setUsers(json));
-  }, []);
+  }, [refreshUserList]);
 
   return (
     <div className="admin-section">
@@ -23,9 +33,14 @@ export default function UserDirectory() {
         <div>Add, remove, or edit users and their related permissions</div>
       </div>
       <div className="admin-content">
+        {editingUser ? (
+          <div>
+            <EditUserModal user={editingUser} exit={exitEdit} refresh={refresh}></EditUserModal>
+          </div>
+        ) : null}
         <div className="admin-userlist">
           {users.map((user, idx) => (
-            <div key={idx} className="admin-userlist-user">
+            <div key={idx} className="admin-userlist-user" onClick={() => {setEditingUser(user)}}>
               <div className="admin-userlist-user-info">
                 <div className="admin-userlist-user-email">
                   {user.auth.email}
@@ -34,16 +49,6 @@ export default function UserDirectory() {
                   #{user._id.substring(user._id.length - 6)}
                 </div>
               </div>
-              {/* <div className="admin-userlist-user-controls">
-                {user.permissions.user.admin ? (
-                  <div title="Indicates that user is an administrator">
-                    <IconStars></IconStars>
-                  </div>
-                ) : null}
-                <div className="admin-userlist-user-controls-edit" title="Edit this users details">
-                  <IconPencil></IconPencil>
-                </div>
-              </div> */}
             </div>
           ))}
         </div>

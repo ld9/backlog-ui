@@ -1,3 +1,10 @@
+/******************************************************
+
+            GENERAL
+
+*******************************************************/
+
+
 .admin-section {
   margin: 24px 48px;
   padding: 12px;
@@ -8,13 +15,23 @@
 }
 
 .admin-heading > div {
-  opacity: 0.8;
+  /* opacity: 0.8; */
   width: max-content;
 }
 
 #admin-content-source {
   max-width: 360px;
 }
+
+
+
+/******************************************************
+
+            ADDING NEW CONTENT
+
+*******************************************************/
+
+
 
 .dropzone-contain {
   display: flex;
@@ -180,6 +197,14 @@ input:focus + span::after {
   cursor: pointer;
 }
 
+
+/******************************************************
+
+            USER LISTING/EDITING
+
+*******************************************************/
+
+
 .admin-userlist {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -192,7 +217,7 @@ input:focus + span::after {
   border: 4px solid var(--sub-color);
   border-radius: 24px;
 
-  padding: 8px;
+  padding: 8px 32px;
   margin-right: 12px;
 
   cursor: pointer;
@@ -211,6 +236,10 @@ input:focus + span::after {
   margin-left: 24px;
 }
 
+.admin-userlist-user-id.modal-form {
+  margin: auto;
+}
+
 .admin-userlist-user-id:before {
   content: "ID";
   font-size: .8em;
@@ -224,4 +253,177 @@ input:focus + span::after {
 
 .admin-userlist-user-controls-edit:hover * {
   color: var(--sub-color);
+}
+
+.modal-contain * {
+  text-align: left;
+}
+
+.user-edit-contain {
+  min-width: 384px;
+}
+
+.user-edit-contain .user-edit-title {
+  color: var(--main-color);
+  margin-right: 12px;
+  font-weight: bold;
+}
+
+.user-edit-email-id {
+  display: flex;
+}
+
+.user-edit-permissions {
+  margin: 24px auto;
+}
+
+.user-edit-permissions > div {
+  margin: 12px auto;
+}
+
+.user-edit-permissions > div > h4 {
+  color: var(--sub-color);
+  font-weight: bold;
+  border-bottom: 1px solid var(--main-color);
+}
+
+.user-edit-permissions-meta-list td:first-child {
+  padding-right: 24px;
+}
+
+.user-edit-permissions-media-list td {
+  padding-right: 12px;
+}
+
+.revoke-icon-cell {
+  text-align: right;
+  padding-right: 0 !important;
+  cursor: pointer;
+}
+
+.revoke-icon-cell:hover svg * {
+  color: var(--main-color) !important;
+}
+
+.user-edit-permissions-media-list .icon-tabler {
+  width: 1em;
+  height: 1em;
+}
+
+
+
+/******************************************************
+
+            COLLECTION LISTING
+
+*******************************************************/
+
+
+.admin-collection-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.admin-collection-list-item {
+  display: flex;
+  flex-direction: column;
+  
+  border: 4px solid var(--sub-color);
+  border-radius: 24px;
+
+  padding: 12px 32px;
+  margin-right: 12px;
+
+  cursor: pointer;
+}
+
+.admin-collection-list-item:hover {
+  border-right-width: 48px;
+}
+
+.admin-collection-list-item-title {
+  font-weight: bold;
+}
+
+.admin-collection-list-item-iterable > span {
+  margin-left: 6px;
+}
+
+.admin-collection-list-item-iterable > span:before {
+  content: "ID";
+  font-size: .8em;
+  color: var(--sub-color);
+  margin-right: 4px;
+}
+
+/* Comma separate list, except the last item, with no comma. */
+.admin-collection-list-item-iterable > span:after {
+  content: ",";
+}
+
+.admin-collection-list-item-iterable > span:last-child:after {
+  content: "";
+}
+
+.collection-edit h3 > span {
+  font-weight: bold;
+  border-bottom: 2px solid var(--sub-color);
+  margin-bottom: 24px;
+}
+
+.collection-edit h4 {
+  color: var(--sub-color);
+  font-weight: bold;
+  border-bottom: 1px solid var(--main-color);
+}
+
+.collection-edit-meat {
+  margin: 24px auto;
+  min-width: 360px;
+}
+
+.collection-edit-meat > div {
+  margin: 24px auto;
+}
+
+/* sub: lookup windows */
+
+.collection-edit h4 > span {
+  float: right;
+  cursor: pointer;
+}
+
+.lookup-list {
+  margin: 24px auto;
+}
+
+.lookup-list-title {
+  color: var(--sub-color);
+  font-weight: bold;
+  border-bottom: 1px solid var(--main-color);
+}
+
+.lookup-list-filter {
+  margin: 12px 12px 12px auto;
+}
+
+.lookup-list-filter > input {
+  width: 224px;
+  border: none;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--main-color);
+}
+
+.lookup-list-filter > input:focus {
+  outline: none;
+  border-color: var(--sub-color);
+}
+
+.tentative {
+  color: var(--sub-color);  
+}
+
+.tentative {
+  
 }

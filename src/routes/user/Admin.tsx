@@ -2,6 +2,7 @@ import "../../styles/admin.css";
 import { strings } from "../../strings";
 import ContentAdd from "../../components/admin/ContentAdd";
 import UserDirectory from "../../components/admin/UserDirectory";
+import CollectionCatalog from "../../components/admin/CollectionCatalog";
 
 export default function Admin() {
   return (
@@ -12,6 +13,7 @@ export default function Admin() {
       <div>
         <ContentAdd></ContentAdd>
         <UserDirectory></UserDirectory>
+        <CollectionCatalog></CollectionCatalog>
       </div>
       <div className="admin-section">
         <div className="admin-heading">
