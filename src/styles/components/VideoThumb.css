@@ -13,6 +13,7 @@
     border: 1px solid var(--sub-color);
 
     display: flex;
+    flex-direction: column;
 
     width: 240px;
     height: 135px;
@@ -31,6 +32,25 @@
     
     word-wrap: break-word;
     user-select: none;
+}
+
+.video-thumb-locked {
+    margin: auto;
+
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 2em;
+
+    display: flex;
+    justify-content: center;
+
+    height: 48px;
+    width: 48px;
+}
+
+.video-thumb-locked svg {
+    position: relative;
+    top: 3px;
+    left: 6px;
 }
 
 .video-thumb-behind {
