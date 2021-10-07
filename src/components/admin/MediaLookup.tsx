@@ -35,9 +35,9 @@ export default function MediaLookup({
         <div className="lookup-list">
           <div className="lookup-list-title">Current Contents</div>
           <div className="lookup-list-contents">
-            {selected?.map((media: any) => {
+            {selected?.map((media: any, idx: number) => {
               return (
-                <div>
+                <div key={idx}>
                   <input
                     type="checkbox"
                     checked={true}
@@ -75,9 +75,9 @@ export default function MediaLookup({
               .filter((a: any) => {
                 return JSON.stringify(a).toLowerCase().includes(lookup.toLowerCase());
               })
-              .map((media) => {
+              .map((media, idx) => {
                 return (
-                  <div>
+                  <div key={idx}>
                     <input
                       type="checkbox"
                       checked={false}

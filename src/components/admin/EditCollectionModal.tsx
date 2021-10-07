@@ -10,8 +10,8 @@ export default function EditCollectionModal({
   refresh,
   exit,
 }: any) {
-  const [members, setMembers] = useState<null | Array<any>>(null);
-  const [content, setContent] = useState<null | Array<any>>(null);
+  const [members, setMembers] = useState<null | Array<any>>([]);
+  const [content, setContent] = useState<null | Array<any>>([]);
 
   const [tentativeMembers, setTentativeMembers] = useState<Array<any>>([]);
   const [tentativeContent, setTentativeContent] = useState<Array<any>>([]);
@@ -25,6 +25,24 @@ export default function EditCollectionModal({
 
   const exitLookupMedia = () => {
     setLookupMedia(false);
+  };
+
+  const doUpdate = () => {
+    let builtCollection = {
+      ...collection,
+      members: members?.map((m) => m._id),
+      contents: content?.map((c) => c._id),
+    };
+
+    fetch(`${BASE_API_URL}/api/collection/${collection._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(builtCollection),
+    })
+      .then((res) => res.json())
+      .then((text) => console.log(text));
   };
 
   useEffect(() => {
@@ -43,24 +61,35 @@ export default function EditCollectionModal({
         })
       );
 
-      let contentTemp = Promise.all(
-        collection.content.map(async (id: any) => {
-          const response = await fetch(`${BASE_API_URL}/api/media/${id}`, {
-            // headers: {
-            //   authorization: `Bearer ${token}`,
-            // },
-          });
+      let contentTemp;
+      if (collection.contents) {
+        contentTemp = Promise.all(
+          collection.contents.map(async (id: any) => {
+            const response = await fetch(`${BASE_API_URL}/api/media/${id}`, {
+              // headers: {
+              //   authorization: `Bearer ${token}`,
+              // },
+            });
 
-          return await response.json();
-        })
-      );
+            return await response.json();
+          })
+        );
+      } else {
+        contentTemp = [];
+      }
 
       setMembers(await memberTemp);
       setContent(await contentTemp);
     })();
   }, [collection]);
 
+  const noCommitExit = () => {
+    exit();
+  };
+
   const commitExit = () => {
+    doUpdate();
+    refresh();
     exit();
   };
 
@@ -105,9 +134,9 @@ export default function EditCollectionModal({
                       </a>
                     </span>
                   </h4>
-                  {content.map((item) => {
+                  {content.map((item, key) => {
                     return (
-                      <div>
+                      <div key={key}>
                         {item.meta.title} (#
                         {item._id.substring(item._id.length - 6)})
                       </div>
@@ -133,9 +162,9 @@ export default function EditCollectionModal({
                       </a>
                     </span>
                   </h4>
-                  {members.map((user) => {
+                  {members.map((user, key) => {
                     return (
-                      <div>
+                      <div key={key}>
                         {user.name.first} {user.name.last} (#
                         {user._id.substring(user._id.length - 6)})
                       </div>
@@ -151,7 +180,7 @@ export default function EditCollectionModal({
             </div>
           </div>
           <div>
-            <button onClick={commitExit}>Cancel</button>
+            <button onClick={noCommitExit}>Cancel</button>
             <button onClick={commitExit}>Commit Changes</button>
           </div>
         </div>
