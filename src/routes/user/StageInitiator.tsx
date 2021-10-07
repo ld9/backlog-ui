@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { watchForResponse, socket } from "../../socket";
 import { useGlobalState } from "../../state";
 import { MessageInform, SocketBeaconMessageType } from "../../types/SocketInfoMessage";
@@ -10,9 +10,13 @@ export default function StageInitiator() {
     newStage: string;
   };
 
+  const location = useLocation();
+  const remotePath = location.pathname.startsWith("/user/remote");
+
   let history = useHistory();
 
   let [stage, setStage] = useGlobalState("stage");
+  let [isRemote, setIsRemote] = useGlobalState("isRemote");
   let [user, setUser] = useGlobalState("user");
 
   
@@ -20,7 +24,7 @@ export default function StageInitiator() {
   useEffect(() => {
 
     async function doJoin(updatedStage: Stage) {
-      socket.emit("request-join", {stage: updatedStage.name, user: user.name.first});
+      socket.emit("request-join", {stage: updatedStage.name, user: `${user.name.first}${remotePath ? ' (Remote Control)' : ''}`});
       await watchForResponse('inform-join');
       
       setStage(updatedStage);
@@ -32,7 +36,9 @@ export default function StageInitiator() {
     if (newStage !== "") {
       let updatedStage;
 
-      // console.log(stage);
+      if (remotePath) {
+        setIsRemote(true);
+      }
 
       if (newStage === "create") {
         updatedStage = {

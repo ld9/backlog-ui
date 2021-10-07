@@ -211,3 +211,11 @@
 #stage.stage-inactive {
   display: none;
 }
+
+.stage-remote video {
+  display: none;
+}
+
+.watcher-remote-hide {
+  display: none;
+}

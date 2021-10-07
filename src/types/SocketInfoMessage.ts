@@ -30,7 +30,8 @@ export interface Payload {
     buffer: {
         start: number,
         end: number
-    }[]
+    }[],
+    imaremote?: boolean
 }
 
 export interface MessageInform extends BeaconMessage {

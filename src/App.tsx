@@ -131,6 +131,7 @@ export default function App() {
           <Route path="/user/preferences" component={Preferences} />
 
           <Route path="/user/stage/:newStage" component={StageInitiator} />
+          <Route path="/user/remote/:newStage" component={StageInitiator} />
           <Route path="/user/stage" />
 
           <Route path="/user/movie/:slug" />

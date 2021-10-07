@@ -33,5 +33,6 @@ export const { useGlobalState } = createGlobalState({
     token: localStorage.getItem("user-token"),
     stage: blankStage,
     user: blankUser,
-    toasts: blankToasts
+    toasts: blankToasts,
+    isRemote: false
 });

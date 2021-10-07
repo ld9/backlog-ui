@@ -18,6 +18,7 @@ import { BASE_API_URL, BASE_CONTENT_URL } from "../../variables";
 export default function Stage() {
   const [stage, setStage] = useGlobalState("stage");
   const [user, setUser] = useGlobalState("user");
+  const [isRemote, setIsRemote] = useGlobalState("isRemote");
   const [token, setToken] = useGlobalState("token");
 
   const location = useLocation();
@@ -92,6 +93,7 @@ export default function Stage() {
             time: video.current.currentTime,
             playing: !video.current.paused,
             name: user.name.first,
+            imaremote: isRemote,
             buffer: currentBuffer(),
           },
         };
@@ -109,7 +111,7 @@ export default function Stage() {
       // Effectively re-runs this useEffect.
       video.current.onended = function () {
         setCompleteCount(completeCount + 1);
-      }
+      };
     }
 
     // Maybe this should just be in the onended function?
@@ -193,6 +195,7 @@ export default function Stage() {
           time: 0,
           playing: false,
           name: user.name.first,
+          imaremote: isRemote,
           buffer: [],
         },
       };
@@ -322,7 +325,7 @@ export default function Stage() {
       id="stage"
       className={`${isActive ? "stage-active" : "stage-inactive"} ${
         isFull ? "stage-full" : "stage-mini"
-      }`}
+      } ${isRemote ? "stage-remote" : null}`}
     >
       <div id="stage-pseudo-header">A</div>
       <div id="stage-content">
@@ -352,7 +355,7 @@ export default function Stage() {
               <h3>Stage Audience</h3>
               {Object.values(watchers).map(
                 (watcher: any /* FIX ME!! UNTYPED */, key: number) => (
-                  <div key={key} className="stage-watcher">
+                  <div key={key} className={`stage-watcher ${watcher.imaremote ? 'watcher-remote-hide' : ''}`}>
                     <div className="stage-watcher-name">
                       {watcher.status.name}
                       <span className="watcher-uid-tag">
