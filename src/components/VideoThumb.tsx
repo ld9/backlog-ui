@@ -17,8 +17,11 @@ export default function VideoThumb ({ video, setMediaModal }: {video: MediaItem,
     
     return (
         <div className="video-thumb-behind">
-            <div className="video-thumb-bgparent" style={{backgroundImage: `url(${tmdbImage()})`}}>
-                <div className="video-thumb" onClick={() => { setMediaModal(video) }} >
+          {video.previewOnly ? (
+            <div className="video-thumb-locked">
+              <IconLock size={32}></IconLock>
+            </div>
+          ) : null}
                     <div className="video-thumb-text">
                         <div className="video-thumb-title">{video.meta.title}</div>
                     </div>
