@@ -77,6 +77,23 @@ export default function App() {
       document.documentElement.style.setProperty("font-family", localStorageFont);
     }
 
+    // Clear mediaKeys
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('mediaKey')) {
+        const stored = localStorage.getItem(key);
+        if (stored == null) {
+          localStorage.removeItem(key);
+          return;
+        }
+        const item = JSON.parse(stored);
+
+        if (!item.authorized || item.invalidated || item.expires < new Date()) {
+          localStorage.removeItem(key);
+          return;
+        }
+
+      }
+    });
 
   }, []);
 
