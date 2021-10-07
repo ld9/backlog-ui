@@ -77,7 +77,7 @@ export default function MovieModal({
                 <IconPencil />
               </div>
             ) : null}
-            {stage.queue.length == 0 ? (
+            {media?.previewOnly ? null : stage.queue.length == 0 ? (
               <div className="modal-content-button" onClick={addToQueueEnd}>
                 <span>{strings.movies_popup_watch}</span>
                 <IconArrowUpRight />
