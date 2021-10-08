@@ -2,6 +2,7 @@ import { IconPencil, IconStars } from "@tabler/icons";
 import { useEffect, useState } from "react";
 
 import { useGlobalState } from "../../state";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import EditUserModal from "./EditUserModal";
 
@@ -29,8 +30,8 @@ export default function UserDirectory() {
   return (
     <div className="admin-section">
       <div className="admin-heading">
-        <h2>User Management</h2>
-        <div>Add, remove, or edit users and their related permissions</div>
+        <h2>{strings.admin_users_title}</h2>
+        <div>{strings.admin_users_desc}</div>
       </div>
       <div className="admin-content">
         {editingUser ? (

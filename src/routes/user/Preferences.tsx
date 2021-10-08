@@ -1,4 +1,3 @@
-import React from "react";
 import ThemeSelector from "../../components/preferences/ThemeSelector";
 import FontSizeSelector from "../../components/preferences/FontSizeSelector";
 import FontFamilySelector from "../../components/preferences/FontFamilySelector";

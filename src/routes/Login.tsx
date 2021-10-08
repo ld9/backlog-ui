@@ -7,6 +7,7 @@ import "../styles/login.css";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
 import { NavLink } from "react-router-dom";
+import { strings } from "../strings";
 
 export default function Login() {
   let history = useHistory();
@@ -65,7 +66,7 @@ export default function Login() {
         <form onSubmit={doLogin}>
           <div>
             <label>
-              <p>E-Mail Address</p>
+              <p>{strings.login_email}</p>
               <input
                 type="text"
                 value={email}
@@ -75,7 +76,7 @@ export default function Login() {
               />
             </label>
             <label>
-              <p>Password</p>
+              <p>{strings.login_pass}</p>
               <input
                 type="password"
                 value={pass}
@@ -86,11 +87,11 @@ export default function Login() {
           </div>
           <div>
             {wrongPass ? (
-              <div className="login-fail">Incorrect Email or Password (Failures Logged: {wrongPass})</div>
+              <div className="login-fail">{strings.login_passWrong} ({strings.login_failed}: {wrongPass})</div>
             ) : null}
             <div className="password-reset-button">
               <NavLink to="request-reset-password">
-                Request Password Reset
+                {strings.login_reset}
               </NavLink>
             </div>
             <input type="submit" value="Login"></input>

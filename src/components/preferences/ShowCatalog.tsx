@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { createGlobalState } from "react-hooks-global-state";
 import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 

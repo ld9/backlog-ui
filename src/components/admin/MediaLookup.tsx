@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
 
@@ -31,9 +32,11 @@ export default function MediaLookup({
   return (
     <Modal>
       <div>
-        <h3>Media Lookup</h3>
+        <h3>{strings.admin_collections_media_title}</h3>
         <div className="lookup-list">
-          <div className="lookup-list-title">Current Contents</div>
+          <div className="lookup-list-title">
+            {strings.admin_collections_media_contents}
+          </div>
           <div className="lookup-list-contents">
             {selected?.map((media: any, idx: number) => {
               return (
@@ -59,7 +62,9 @@ export default function MediaLookup({
           </div>
         </div>
         <div className="lookup-list">
-          <div className="lookup-list-title">Full Catalog</div>
+          <div className="lookup-list-title">
+            {strings.admin_collections_media_catalog}
+          </div>
           <div className="lookup-list-filter">
             <input
               type="text"
@@ -73,7 +78,9 @@ export default function MediaLookup({
           <div className="lookup-list-contents">
             {catalog
               .filter((a: any) => {
-                return JSON.stringify(a).toLowerCase().includes(lookup.toLowerCase());
+                return JSON.stringify(a)
+                  .toLowerCase()
+                  .includes(lookup.toLowerCase());
               })
               .map((media, idx) => {
                 return (
@@ -98,7 +105,7 @@ export default function MediaLookup({
               })}
           </div>
         </div>
-        <button onClick={exit}>Done</button>
+        <button onClick={exit}>{strings.admin_collections_media_done}</button>
       </div>
     </Modal>
   );

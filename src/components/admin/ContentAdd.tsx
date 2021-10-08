@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { useGlobalState } from "../../state";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 
 import Genres from './genres';
@@ -230,8 +231,8 @@ export default function ContentAdd() {
   return (
     <div className="admin-section">
       <div className="admin-heading">
-        <h2>Add or Upload Content</h2>
-        <div>Allow users to access new content by adding it here</div>
+        <h2>{strings.admin_add_title}</h2>
+        <div>{strings.admin_add_desc}</div>
       </div>
       <div className="admin-content">
         {/* <div id="admin-content-type-select">
@@ -265,7 +266,7 @@ export default function ContentAdd() {
                           <div>
                             <IconUpload />
                           </div>
-                          <div>Drop a file or click to upload</div>
+                          <div>{strings.admin_add_dropzone}</div>
                         </div>
                         <div
                           className={`dropzone-files ${
@@ -324,19 +325,19 @@ export default function ContentAdd() {
                     <div>
                       <IconFileAlert></IconFileAlert>
                     </div>{" "}
-                    <div>Please add at least one file to begin.</div>
+                    <div>{strings.admin_add_fileRequired}</div>
                   </div>
                 );
               } else if (Object.keys(files).length == 1) {
                 return (
                   <div className="author-meta author-meta-single">
                     <div>
-                      <h3>Single File Addition</h3>
-                      <p>Add additional files to create a series</p>
+                      <h3>{strings.admin_add_single_title}</h3>
+                      <p>{strings.admin_add_single_desc}</p>
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Media Type</p>
+                      <p>{strings.admin_add_type_title}</p>
                       <div>
                         <input
                           type="radio"
@@ -347,7 +348,7 @@ export default function ContentAdd() {
                             setMetaType(e.target.value);
                           }}
                         />{" "}
-                        Video (Series)
+                        {strings.admin_add_type_series}
                         <br />
                         <input
                           type="radio"
@@ -358,7 +359,7 @@ export default function ContentAdd() {
                             setMetaType(e.target.value);
                           }}
                         />{" "}
-                        Video (Movie)
+                        {strings.admin_add_type_movie}
                         <br />
                         <input
                           type="radio"
@@ -369,12 +370,12 @@ export default function ContentAdd() {
                             setMetaType(e.target.value);
                           }}
                         />{" "}
-                        Audio
+                        {strings.admin_add_type_audio}
                       </div>
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Media Title</p>
+                      <p>{strings.admin_add_media_title}</p>
                       <input
                         type="text"
                         value={metaTitle}
@@ -404,7 +405,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Release Year</p>
+                      <p>{strings.admin_add_media_release}</p>
                       <input
                         type="text"
                         value={metaYear}
@@ -416,7 +417,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Genre</p>
+                      <p>{strings.admin_add_media_genre}</p>
                       <input
                         type="text"
                         value={metaGenre}
@@ -428,7 +429,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Banner Image URL</p>
+                      <p>{strings.admin_add_media_banner}</p>
                       <input
                         type="text"
                         value={metaBannerUrl}
@@ -440,7 +441,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Tags (Separate using ';')</p>
+                      <p>{strings.admin_add_media_tags}</p>
                       <input
                         type="text"
                         value={metaTags}
@@ -452,7 +453,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Grant permission to users (Separate using ';')</p>
+                      <p>{strings.admin_add_media_users}</p>
                       <input
                         type="text"
                         value={metaUserGrant}
@@ -464,7 +465,7 @@ export default function ContentAdd() {
                     </div>
 
                     <div className="meta-input-container">
-                      <p>Grant permission to groups (Separate using ';')</p>
+                      <p>{strings.admin_add_media_group}</p>
                       <input
                         type="text"
                         value={metaGroupGrant}
@@ -477,7 +478,7 @@ export default function ContentAdd() {
 
                     <div className="submit-content-container">
                       <button onClick={() => submitSingleFile()}>
-                        Create Media Entry
+                        {strings.admin_add_create}
                       </button>
                     </div>
                   </div>

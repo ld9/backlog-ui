@@ -1,5 +1,6 @@
 import { IconFilePlus, IconPlus, IconTrash, IconUserPlus } from "@tabler/icons";
 import { useEffect, useState } from "react";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
 import MediaLookup from "./MediaLookup";
@@ -116,14 +117,15 @@ export default function EditCollectionModal({
       {collection ? (
         <div className="collection-edit">
           <h3>
-            Editing <span>{collection.title}</span>
+            {strings.admin_collections_edit_title}{" "}
+            <span>{collection.title}</span>
           </h3>
           <div className="collection-edit-meat">
             <div>
               {content ? (
                 <div>
                   <h4>
-                    Contents
+                    {strings.admin_collections_edit_contents}
                     <span>
                       <a
                         onClick={() => {
@@ -144,14 +146,14 @@ export default function EditCollectionModal({
                   })}
                 </div>
               ) : (
-                <div>No Content (Add some!)</div>
+                <div>{strings.admin_collections_edit_noContent}</div>
               )}
             </div>
             <div>
               {members ? (
                 <div>
                   <h4>
-                    Members
+                    {strings.admin_collections_edit_members}
                     <span>
                       <a
                         onClick={() => {
@@ -173,15 +175,19 @@ export default function EditCollectionModal({
                 </div>
               ) : (
                 <div>
-                  <h4>Members</h4>
-                  <div>None - add one!</div>
+                  <h4> {strings.admin_collections_edit_members}</h4>
+                  <div>{strings.admin_collections_edit_noMembers}</div>
                 </div>
               )}
             </div>
           </div>
           <div>
-            <button onClick={noCommitExit}>Cancel</button>
-            <button onClick={commitExit}>Commit Changes</button>
+            <button onClick={noCommitExit}>
+              {strings.admin_collections_edit_cancel}
+            </button>
+            <button onClick={commitExit}>
+              {strings.admin_collections_edit_commit}
+            </button>
           </div>
         </div>
       ) : null}

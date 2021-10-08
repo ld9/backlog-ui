@@ -7,6 +7,7 @@ import "../styles/password-reset.css";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
 import { NavLink } from "react-router-dom";
+import { strings } from "../strings";
 
 export default function RequestResetPassword() {
   let { token } = useParams() as any;
@@ -54,7 +55,7 @@ export default function RequestResetPassword() {
           <div>
             <label>
               <p className={passConfOk ? "" : "mismatch-password"}>
-                Desired Password
+                {strings.reset_desired}
               </p>
               <input
                 type="password"
@@ -64,7 +65,7 @@ export default function RequestResetPassword() {
               />
             </label>
             <label>
-              <p>Confirm Desired Password</p>
+              <p>{strings.reset_confirm}</p>
               <input
                 type="password"
                 value={passConf}
@@ -77,11 +78,9 @@ export default function RequestResetPassword() {
             {requestSent ? (
               <div>
                 <p className="reset-request-message">
-                  Your request has been processed. Please log in with your new
-                  password. If you used an invalid link, you will be directed to
-                  attempt to reset again.
+                  {strings.reset_complete}
                 </p>
-                <NavLink to="/login">Return to Login</NavLink>
+                <NavLink to="/login">{strings.reset_return}</NavLink>
               </div>
             ) : (
               <input type="submit" value="Request Reset"></input>

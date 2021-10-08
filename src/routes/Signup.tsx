@@ -6,6 +6,7 @@ import { createGlobalState } from "react-hooks-global-state";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
+import { strings } from "../strings";
 
 export default function Signup() {
   const history = useHistory();
@@ -115,7 +116,7 @@ export default function Signup() {
     <form onSubmit={loginUser}>
       <div>
         <label>
-          <p className={emailOk ? "" : "alter-email"}>E-Mail Address</p>
+          <p className={emailOk ? "" : "alter-email"}>{strings.signup_email}</p>
           <input
             type="text"
             value={email}
@@ -125,7 +126,7 @@ export default function Signup() {
           />
         </label>
         <label>
-          <p>First Name</p>
+          <p>{strings.signup_fname}</p>
           <input
             type="text"
             value={name}
@@ -134,7 +135,7 @@ export default function Signup() {
           />
         </label>
         <label>
-          <p>Last Name</p>
+          <p>{strings.signup_lname}</p>
           <input
             type="text"
             value={lname}
@@ -145,7 +146,7 @@ export default function Signup() {
       </div>
       <div>
         <label>
-          <p className={passConfOk ? "" : "mismatch-password"}>Password</p>
+          <p className={passConfOk ? "" : "mismatch-password"}>{strings.signup_pass}</p>
           <input
             type="password"
             value={pass}
@@ -154,7 +155,7 @@ export default function Signup() {
           />
         </label>
         <label>
-          <p>Confirm Password</p>
+          <p>{strings.signup_passConfirm}</p>
           <input
             type="password"
             value={passConf}
@@ -172,14 +173,13 @@ export default function Signup() {
 
   const waiting = (
     <div className="create-status">
-      Your account is currently being created. Please do not refresh the page.
+      {strings.signup_processing}
     </div>
   );
 
   const success = (
     <div className="create-status">
-      Success! Your account has been created. Please check your email for a
-      confirmation message. You will now be logged in.
+      {strings.signup_success}
     </div>
   );
 

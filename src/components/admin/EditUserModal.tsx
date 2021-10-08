@@ -1,5 +1,6 @@
 import { IconTrash } from "@tabler/icons";
 import { useEffect, useState } from "react";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
 
@@ -76,7 +77,7 @@ export default function EditUserModal({ user, refresh, exit }: any) {
       {user ? (
         <div className="user-edit-contain">
           <h3>
-            <span className="user-edit-title">Edit User:</span>
+            <span className="user-edit-title">{strings.admin_users_edit_title}:</span>
             <span>
               {user.name.first} {user.name.last}
             </span>
@@ -89,12 +90,12 @@ export default function EditUserModal({ user, refresh, exit }: any) {
           </div>
           <div className="user-edit-permissions">
             <div className="user-edit-permissions-meta">
-              <h4>Meta Permissions</h4>
+              <h4>{strings.admin_users_edit_meta_title}</h4>
               <div className="user-edit-permissions-meta-list">
                 <table>
                   <tbody>
                     <tr>
-                      <td>Admin</td>
+                      <td>{strings.admin_users_edit_meta_admin}</td>
                       <td>
                         <input
                           type="checkbox"
@@ -104,7 +105,7 @@ export default function EditUserModal({ user, refresh, exit }: any) {
                       </td>
                     </tr>
                     <tr>
-                      <td>Paid User</td>
+                      <td>{strings.admin_users_edit_meta_paid}</td>
                       <td>
                         <input
                           type="checkbox"
@@ -114,7 +115,7 @@ export default function EditUserModal({ user, refresh, exit }: any) {
                       </td>
                     </tr>
                     <tr>
-                      <td>Email Verified</td>
+                      <td>{strings.admin_users_edit_meta_email}</td>
                       <td>
                         <input
                           type="checkbox"
@@ -128,15 +129,15 @@ export default function EditUserModal({ user, refresh, exit }: any) {
               </div>
             </div>
             <div className="user-edit-permissions-media">
-              <h4>Media Permissions</h4>
+              <h4>{strings.admin_users_edit_media_title}</h4>
               <div className="user-edit-permissions-media-list">
                 <table>
                   <tbody>
                     <tr>
-                      <th>Type</th>
-                      <th>ID</th>
-                      <th>Title</th>
-                      <th>Revoke</th>
+                      <th>{strings.admin_users_edit_media_type}</th>
+                      <th>{strings.admin_users_edit_media_id}</th>
+                      <th>{strings.admin_users_edit_media_title}</th>
+                      <th>{strings.admin_users_edit_media_revoke}</th>
                     </tr>
                     {media
                       ? media.map((item, idx) => {
@@ -156,12 +157,9 @@ export default function EditUserModal({ user, refresh, exit }: any) {
                 </table>
               </div>
             </div>
-            <div className="user-edit-permissions-collection">
-              <h4>Collection Permissions</h4>
-            </div>
           </div>
           <div>
-            <button onClick={commitExit}>Done Editing</button>
+            <button onClick={commitExit}>{strings.admin_users_edit_done}</button>
           </div>
         </div>
       ) : null}

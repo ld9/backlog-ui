@@ -7,6 +7,7 @@ import "../styles/password-reset.css";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
 import { NavLink } from "react-router-dom";
+import { strings } from "../strings";
 
 export default function RequestResetPassword() {
   let history = useHistory();
@@ -41,7 +42,7 @@ export default function RequestResetPassword() {
         <form onSubmit={doResetRequest}>
           <div>
             <label>
-              <p>E-Mail Address</p>
+              <p>{strings.requestReset_email}</p>
               <input
                 type="text"
                 value={email}
@@ -54,9 +55,7 @@ export default function RequestResetPassword() {
           <div>
             {requestSent ? (
               <p className="reset-request-message">
-                Your request has been received by the server. If an account with
-                this email address exists, a link will be sent to it with
-                instructions to reset your password. Thank you!
+                {strings.requestReset_confirm}
               </p>
             ) : (
               <input type="submit" value="Request Reset"></input>

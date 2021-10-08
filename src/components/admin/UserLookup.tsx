@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
 
@@ -31,9 +32,9 @@ export default function UserLookup({
   return (
     <Modal>
       <div>
-        <h3>User Lookup</h3>
+        <h3>{strings.admin_collections_user_title}</h3>
         <div className="lookup-list">
-          <div className="lookup-list-title">Approved Users</div>
+          <div className="lookup-list-title">{strings.admin_collections_user_approved}</div>
           <div className="lookup-list-contents">
             {selected?.map((user: any) => {
               return (
@@ -59,7 +60,7 @@ export default function UserLookup({
           </div>
         </div>
         <div className="lookup-list">
-          <div className="lookup-list-title">User Directory</div>
+          <div className="lookup-list-title">{strings.admin_collections_user_directory}</div>
           <div className="lookup-list-filter">
             <input
               type="text"
@@ -98,7 +99,7 @@ export default function UserLookup({
               })}
           </div>
         </div>
-        <button onClick={exit}>Done</button>
+        <button onClick={exit}>{strings.admin_collections_user_done}</button>
       </div>
     </Modal>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import EditCollectionModal from "./EditCollectionModal";
 
@@ -50,8 +51,8 @@ export default function CollectionCatalog() {
   return (
     <div className="admin-section">
       <div className="admin-heading">
-        <h2>Collection Management</h2>
-        <div>Create or update video collections</div>
+        <h2>{strings.admin_collections_title}</h2>
+        <div>{strings.admin_collections_desc}</div>
       </div>
       <div className="admin-content">
         {editingCollection ? (
@@ -65,7 +66,7 @@ export default function CollectionCatalog() {
         ) : null}
 
         <a href="javascript:void()" onClick={createNewCollection}>
-          Add new
+          {strings.admin_collections_new}
         </a>
         <div className="admin-collection-list">
           {collections.map(
@@ -89,7 +90,7 @@ export default function CollectionCatalog() {
                     {collection.title}
                   </div>
                   <div className="admin-collection-list-item-iterable">
-                    Members:
+                    {strings.admin_collections_thumb_members}:
                     {collection.members.slice(0, 3).map((person: any, idx) => {
                       return (
                         <span key={idx}>
@@ -100,7 +101,7 @@ export default function CollectionCatalog() {
                     {collection.members.length > 3 ? "..." : null}
                   </div>
                   <div className="admin-collection-list-item-iterable">
-                    Content Items:
+                    {strings.admin_collections_thumb_content}:
                     {collection.contents ? (
                       <div>
                         {collection.contents

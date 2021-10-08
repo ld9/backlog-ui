@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { socket } from "../../socket";
 import { useGlobalState } from "../../state";
+import { strings } from "../../strings";
 
 import "../../styles/stages.css";
 import {
@@ -336,23 +337,23 @@ export default function Stage() {
         </div>
         <div id="stage-extra-content">
           <div id="global-controls">
-            <h3>Global Controls</h3>
+            <h3>{strings.stage_global_title}</h3>
             {stage.name === "local" ? (
               <button
                 onClick={() => {
                   history.push("/user/stage/create");
                 }}
               >
-                Create Joinable Room
+                {strings.stage_global_createRoom}
               </button>
             ) : null}
-            <button onClick={requestPause}>Pause All</button>
-            <button onClick={requestResume}>Play All</button>
-            <button onClick={requestSeek}>Jump to Me</button>
+            <button onClick={requestPause}>{strings.stage_global_pause}</button>
+            <button onClick={requestResume}>{strings.stage_global_play}</button>
+            <button onClick={requestSeek}>{strings.stage_global_jump}</button>
           </div>
           {stage.name !== "local" ? (
             <div id="stage-watchers">
-              <h3>Stage Audience</h3>
+              <h3>{strings.stage_audience_title}</h3>
               {Object.values(watchers).map(
                 (watcher: any /* FIX ME!! UNTYPED */, key: number) => (
                   <div key={key} className={`stage-watcher ${watcher.imaremote ? 'watcher-remote-hide' : ''}`}>
@@ -394,7 +395,7 @@ export default function Stage() {
             </div>
           ) : null}
           <div id="stage-queue">
-            <h3>Playback Queue</h3>
+            <h3>{strings.stage_queue_title}</h3>
             <div id="stage-queue-list">
               {stage.queue.map((media, idx) => (
                 <div className="stage-queue-item" key={idx}>
