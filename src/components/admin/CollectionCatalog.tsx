@@ -27,6 +27,26 @@ export default function CollectionCatalog() {
     setEditingCollection(null);
   };
 
+  const createNewCollection = async () => {
+    let newCollection = {
+      title: "new-" + (Math.random() * 10000).toString(),
+      contents: [],
+      members: [],
+    };
+
+    let response = await fetch(`${BASE_API_URL}/api/collection/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCollection),
+    });
+
+    await response;
+
+    refresh();
+  };
+
   return (
     <div className="admin-section">
       <div className="admin-heading">
@@ -44,6 +64,9 @@ export default function CollectionCatalog() {
           </div>
         ) : null}
 
+        <a href="javascript:void()" onClick={createNewCollection}>
+          Add new
+        </a>
         <div className="admin-collection-list">
           {collections.map(
             (
