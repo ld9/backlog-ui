@@ -7,6 +7,7 @@ import '../../styles/home.css'
 
 import "../../styles/preferences.css";
 import { strings } from "../../strings";
+import ShowCatalog from "../../components/preferences/ShowCatalog";
 
 export default function Preferences() {
 
@@ -19,6 +20,7 @@ export default function Preferences() {
       <FontSizeSelector></FontSizeSelector>
       <FontFamilySelector></FontFamilySelector>
       <ThemeSelector></ThemeSelector>
+      <ShowCatalog></ShowCatalog>
     </div>
   );
 }

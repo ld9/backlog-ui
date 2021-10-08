@@ -9,7 +9,8 @@ export default function Movies() {
   const [userMovies, setUserMovies] = useState([]);
   const [catalogMovies, setCatalogMovies] = useState([]);
 
-  const [showCatalog, setShowCatalog] = useState(false);
+  // const [showCatalog, setShowCatalog] = useState(false);
+  const [showCatalog, setShowCatalog] = useGlobalState("showCatalog");
 
   useEffect(() => {
     (async () => {
@@ -79,7 +80,7 @@ export default function Movies() {
 
   return (
     <div>
-      debug: show full catalog?<input type="checkbox" checked={showCatalog} onChange={() => {setShowCatalog(!showCatalog)}}></input>
+      {/* debug: show full catalog?<input type="checkbox" checked={showCatalog} onChange={() => {setShowCatalog(!showCatalog)}}></input> */}
       <SortedPanel
         groupingKeys={groupingKeys}
         sortableItems={showCatalog ? [...userMovies, ...catalogMovies] : userMovies}

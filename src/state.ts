@@ -34,5 +34,6 @@ export const { useGlobalState } = createGlobalState({
     stage: blankStage,
     user: blankUser,
     toasts: blankToasts,
+    showCatalog: false,
     isRemote: false
 });

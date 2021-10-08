@@ -41,7 +41,7 @@ export interface IStrings extends LocalizedStringsMethods {
 
     settings_title: string;
 
-    settings_size_title: string; 
+    settings_size_title: string;
     settings_size_desc: string;
 
     settings_font_title: string;
@@ -50,6 +50,10 @@ export interface IStrings extends LocalizedStringsMethods {
     settings_theme_title: string;
     settings_theme_desc: string;
     settings_theme_current: string;
+
+    settings_catalog_title: string;
+    settings_catalog_desc: string;
+    settings_catalog_checkbox: string;
 }
 
 export const strings: IStrings = new LocalizedStrings({
@@ -93,7 +97,7 @@ export const strings: IStrings = new LocalizedStrings({
 
         settings_title: 'Settings',
 
-        settings_size_title: 'Adjust Text Side', 
+        settings_size_title: 'Adjust Text Side',
         settings_size_desc: 'Change the size of text on the site',
 
         settings_font_title: 'Adjust Text Font',
@@ -101,6 +105,10 @@ export const strings: IStrings = new LocalizedStrings({
 
         settings_theme_title: 'Set Color Theme',
         settings_theme_desc: 'Preview and select a visual color theme to be used throughout the interface. Themes are open-source (Miodec)',
-        settings_theme_current: 'Current Theme Name'
+        settings_theme_current: 'Current Theme Name',
+
+        settings_catalog_title: 'Show Catalog',
+        settings_catalog_desc: 'When viewing Movie, TV, and Audio pages, index items which you do not have permission to view or listen to.',
+        settings_catalog_checkbox: 'Show Full Catalog'
     }
 })
