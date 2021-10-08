@@ -4,6 +4,7 @@ import ToastPackage from './types/ToastType';
 
 
 export const blankUser = {
+    _id: '',
     name: {
         first: '',
         last: ''

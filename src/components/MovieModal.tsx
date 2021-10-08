@@ -11,6 +11,7 @@ import {
 } from "@tabler/icons";
 import { socket } from "../socket";
 import { SocketBeaconMessageType } from "../types/SocketInfoMessage";
+import { BASE_API_URL } from "../variables";
 
 export default function MovieModal({
   media,
@@ -36,6 +37,20 @@ export default function MovieModal({
 
   const addToQueueEnd = () => {
     if (media !== null) {
+      fetch(`${BASE_API_URL}/user/recent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: user._id,
+          media: media._id,
+          type: "video",
+        }),
+      })
+        .then((res) => res.text())
+        .then((txt) => console.log(txt));
+
       setStage({
         ...stage,
         queue: [...stage.queue, media],
