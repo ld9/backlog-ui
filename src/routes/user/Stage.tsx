@@ -29,6 +29,7 @@ export default function Stage() {
   const [isActive, setIsActive] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const [completeCount, setCompleteCount] = useState(0);
+  const [currentQueueIndex, setCurrentQueueIndex] = useState(0);
 
   // Makes sure that re-renders happen when needed
   const [msgCount, setMsgCount] = useState(0);
@@ -82,6 +83,28 @@ export default function Stage() {
     }
   }
 
+  function sendRecentProgress(time: number) {
+
+    if (stage.queue.length < 1) {
+      return;
+    }
+
+    fetch(`${BASE_API_URL}/user/recent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: user._id,
+        payload: {
+          mediaId: stage.queue[currentQueueIndex]._id,
+          time
+        },
+        type: "video",
+      }),
+    });
+  }
+
   // When the Video element changes, set the video's event listeners
   // When the video is finished, play the next one.
   useEffect(() => {
@@ -106,8 +129,16 @@ export default function Stage() {
       video.current.ontimeupdate = function () {
         if (video.current != null) {
           sendInformMessage();
+
+          if (Math.round(video.current.currentTime) % 5 == 0) {
+            sendRecentProgress(video.current.currentTime);
+          }
         }
       };
+
+      video.current.onpause = function () {
+        sendRecentProgress((video as any).current.currentTime);
+      }
 
       // Effectively re-runs this useEffect.
       video.current.onended = function () {
@@ -130,6 +161,8 @@ export default function Stage() {
             .split("?")[0] == stage.queue[i].uri
         ) {
           queueItem = stage.queue[i + 1];
+          setCurrentQueueIndex(i+1);
+          
           break;
         }
       }

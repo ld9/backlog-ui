@@ -13,6 +13,7 @@ import { ToastType } from "../../types/ToastType";
 
 export default function Dashboard() {
   const [toasts, setToasts] = useGlobalState("toasts");
+  const [user, setUser] = useGlobalState("user");
 
   const history = useHistory();
 
@@ -42,11 +43,12 @@ export default function Dashboard() {
       <div className="homepage-section">
         <h2>{strings.dash_listened}</h2>
         <div>
-          <div className="test-contain-tracks">
+          test test test test test test
+          {/* <div className="test-contain-tracks">
             {[...Array(12)].map((x, i) => (
               <AudioThumb key={i} track={demoTrack}></AudioThumb>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="homepage-section">
@@ -56,7 +58,11 @@ export default function Dashboard() {
                         <VideoThumb key={i} video={demoVideo}></VideoThumb>
                     )}
                 </div> */}
-
+        ----
+        {user.recent.video.map((video: { mediaId: any, time: number }, idx) => {
+          return <div key={idx}>placeholder-testing: {video.mediaId} at {video.time}s</div>;
+        })}
+        ----
         <SocketTest></SocketTest>
         <button
           onClick={() => {
@@ -67,7 +73,14 @@ export default function Dashboard() {
         </button>
         <button
           onClick={() => {
-            setToasts([...toasts, { content: "asdasd", type: ToastType.GOOD, until: (Date.now() + 3000) }]);
+            setToasts([
+              ...toasts,
+              {
+                content: "asdasd",
+                type: ToastType.GOOD,
+                until: Date.now() + 3000,
+              },
+            ]);
           }}
         >
           Test toasts

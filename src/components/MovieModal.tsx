@@ -45,11 +45,13 @@ export default function MovieModal({
         body: JSON.stringify({
           user: user._id,
           media: media._id,
+          payload: {
+            mediaId: media._id,
+            time: 0
+          },
           type: "video",
         }),
-      })
-        .then((res) => res.text())
-        .then((txt) => console.log(txt));
+      });
 
       setStage({
         ...stage,
