@@ -68,7 +68,7 @@ export default function SortedPanel({
         break;
       case 1:
         _sortedItems = [...sortableItems].sort((a, b) =>
-          a.meta.genre?.localeCompare(b.meta.genre || "")
+          a.meta.primaryTag?.localeCompare(b.meta.primaryTag || "")
         );
         break;
       default:
@@ -96,7 +96,7 @@ export default function SortedPanel({
             thisMeta = video.meta.released || 0;
             break;
           case 1:
-            thisMeta = video.meta.genre || "?";
+            thisMeta = video.meta.primaryTag || "?";
             break;
           default:
             // [0] group by first letter
