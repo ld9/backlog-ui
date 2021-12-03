@@ -106,7 +106,7 @@ export default function SortedPanel({
       }
     });
 
-    setItemList(unique);
+    setItemList(selectedGrouping != 3 ? unique : _filteredSortedItems);
   }, [selectedGrouping, sortableItems, filterString]);
 
   const renderPanelItems = () => {
