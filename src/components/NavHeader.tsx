@@ -12,6 +12,11 @@ export default function NavHeader() {
   const [user, setUser] = useGlobalState("user");
   const [token, setToken] = useGlobalState("token");
   const [stage, setStage] = useGlobalState("stage");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   let path = location.pathname;
   let hideNavBar = ["/", "/login", "/create-account", "/request-reset-password", "/reset-password"];

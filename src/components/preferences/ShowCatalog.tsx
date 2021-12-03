@@ -4,6 +4,11 @@ import { strings } from "../../strings";
 
 export default function ShowCatalog() {
   const [showCatalog, setShowCatalog] = useGlobalState("showCatalog");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   useEffect(() => {
     localStorage.setItem("showCatalog", showCatalog.toString());

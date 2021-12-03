@@ -1,5 +1,6 @@
 import { IconTrash } from "@tabler/icons";
 import { useEffect, useState } from "react";
+import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
@@ -8,6 +9,11 @@ export default function EditUserModal({ user, refresh, exit }: any) {
   const [isAdmin, setIsAdmin] = useState(user.permissions.user.admin);
   const [isVerified, setIsVerified] = useState(user.permissions.user.verified);
   const [isPaid, setIsPaid] = useState(user.permissions.user.paid);
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [media, setMedia] = useState<Array<any>>();
   // const [collections, setCollections] = useState<Array<any>>();
@@ -47,13 +53,17 @@ export default function EditUserModal({ user, refresh, exit }: any) {
       },
       body: JSON.stringify({
         email: user.auth.email,
-        id
-      })
+        id,
+      }),
     }).then(() => {
-      setMedia(media?.filter((a: any) => { return a._id !== id}));
+      setMedia(
+        media?.filter((a: any) => {
+          return a._id !== id;
+        })
+      );
       refresh();
-    })
-  }
+    });
+  };
 
   const toggleIsAdmin = () => {
     setIsAdmin(!isAdmin);
@@ -77,7 +87,9 @@ export default function EditUserModal({ user, refresh, exit }: any) {
       {user ? (
         <div className="user-edit-contain">
           <h3>
-            <span className="user-edit-title">{strings.admin_users_edit_title}:</span>
+            <span className="user-edit-title">
+              {strings.admin_users_edit_title}:
+            </span>
             <span>
               {user.name.first} {user.name.last}
             </span>
@@ -146,7 +158,12 @@ export default function EditUserModal({ user, refresh, exit }: any) {
                               <td>{item.type}</td>
                               <td>{item._id.substring(item._id.length - 6)}</td>
                               <td>{item.meta?.title}</td>
-                              <td className="revoke-icon-cell" onClick={() => { revokeItem(item._id) }}>
+                              <td
+                                className="revoke-icon-cell"
+                                onClick={() => {
+                                  revokeItem(item._id);
+                                }}
+                              >
                                 <IconTrash></IconTrash>
                               </td>
                             </tr>
@@ -159,7 +176,9 @@ export default function EditUserModal({ user, refresh, exit }: any) {
             </div>
           </div>
           <div>
-            <button onClick={commitExit}>{strings.admin_users_edit_done}</button>
+            <button onClick={commitExit}>
+              {strings.admin_users_edit_done}
+            </button>
           </div>
         </div>
       ) : null}

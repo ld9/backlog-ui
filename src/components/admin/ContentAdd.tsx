@@ -12,7 +12,7 @@ import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 
-import Genres from './genres';
+import Genres from "./genres";
 
 interface FileObj {
   file: File;
@@ -23,6 +23,11 @@ interface FileObj {
 export default function ContentAdd() {
   const [method, setMethod] = useState("upload");
   const [token, setToken] = useGlobalState("token");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [metaTitle, setMetaTitle] = useState("");
   const [metaGenre, setMetaGenre] = useState("");
@@ -204,12 +209,21 @@ export default function ContentAdd() {
   };
 
   const applySuggestion = async (suggestion: any) => {
-
-    setMetaBannerUrl(suggestion.backdrop_path ? suggestion.backdrop_path : '');
-    setMetaDescription(suggestion.overview ? suggestion.overview : '');
-    setMetaGenre(suggestion.genre_ids ? (Genres as any)[suggestion.genre_ids[0]].name : '');
-    setMetaYear(suggestion.release_date ? suggestion.release_date.substring(0, 4) : '');
-    setMetaTags(suggestion.genre_ids ? suggestion.genre_ids.map((s: any) => (Genres as any)[s].name).join(';') : '');
+    setMetaBannerUrl(suggestion.backdrop_path ? suggestion.backdrop_path : "");
+    setMetaDescription(suggestion.overview ? suggestion.overview : "");
+    setMetaGenre(
+      suggestion.genre_ids ? (Genres as any)[suggestion.genre_ids[0]].name : ""
+    );
+    setMetaYear(
+      suggestion.release_date ? suggestion.release_date.substring(0, 4) : ""
+    );
+    setMetaTags(
+      suggestion.genre_ids
+        ? suggestion.genre_ids
+            .map((s: any) => (Genres as any)[s].name)
+            .join(";")
+        : ""
+    );
     setMetaTitle(suggestion.original_title);
 
     setMetaTMDB(suggestion);
@@ -396,8 +410,12 @@ export default function ContentAdd() {
                               }}
                             >
                               <div className="media-suggestion-poster"></div>
-                              <div className="media-suggestion-title">{suggestion.original_title}</div>
-                              <div className="media-suggestion-year">{suggestion.release_date?.substring(0,4)}</div>
+                              <div className="media-suggestion-title">
+                                {suggestion.original_title}
+                              </div>
+                              <div className="media-suggestion-year">
+                                {suggestion.release_date?.substring(0, 4)}
+                              </div>
                             </div>
                           );
                         })}

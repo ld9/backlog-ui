@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
+import { BASE_API_URL } from "./variables";
 
-export const socket = io("http://localhost:7000");
+export const socket = io(BASE_API_URL);
 
 socket.on('connect', () => {
     "connected to socket"

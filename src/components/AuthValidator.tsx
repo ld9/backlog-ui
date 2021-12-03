@@ -33,12 +33,14 @@ export default function AuthValidator() {
             .then((response) => response.json())
             .then((data) => {
               if (!data.auth) {
+                localStorage.clear();
                 history.replace("/login");
               } else {
                 setUser(data.auth);
               }
             });
         } else {
+          localStorage.clear();
           history.replace("/login");
         }
       })();

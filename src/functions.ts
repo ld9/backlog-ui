@@ -1,6 +1,4 @@
 import { BASE_API_URL } from "./variables";
-import { useGlobalState } from "./state";
-
 
 export async function checkTokenStillActive() {
     const ute = localStorage.getItem("user-token-expires");

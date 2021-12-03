@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
@@ -11,6 +12,11 @@ export default function MediaLookup({
 }: any) {
   const [catalog, setCatalog] = useState<Array<any>>([]);
   const [lookup, setLookup] = useState("");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   useEffect(() => {
     fetch(`${BASE_API_URL}/api/media/catalog`)

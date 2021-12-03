@@ -3,8 +3,16 @@ import { strings } from "../../strings";
 import ContentAdd from "../../components/admin/ContentAdd";
 import UserDirectory from "../../components/admin/UserDirectory";
 import CollectionCatalog from "../../components/admin/CollectionCatalog";
+import { useGlobalState } from "../../state";
+import { useEffect } from "react";
 
 export default function Admin() {
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
+
   return (
     <div>
       <div className="admin-section admin-title">

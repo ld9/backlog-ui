@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
+import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import EditCollectionModal from "./EditCollectionModal";
 
 export default function CollectionCatalog() {
   let [collections, setCollections] = useState([]);
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [refreshCollectionList, setRefreshCollectionList] = useState(0);
   const [editingCollection, setEditingCollection] = useState<null | Object>(
@@ -30,7 +36,7 @@ export default function CollectionCatalog() {
 
   const createNewCollection = async () => {
     let newCollection = {
-      title: "new-" + (Math.random() * 10000).toString(),
+      title: "new-" + Math.floor((Math.random() * 10000)).toString(),
       contents: [],
       members: [],
     };

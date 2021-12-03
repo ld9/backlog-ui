@@ -424,6 +424,8 @@ input:focus + span::after {
   color: var(--sub-color);  
 }
 
-.tentative {
-  
+@media screen and (max-width: 1140px) {
+  .admin-collection-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

@@ -14,13 +14,17 @@ export default function Login() {
 
   const [token, setToken] = useGlobalState("token");
   const [tokenExpire, setTokenExpire] = useGlobalState("tokenExpire");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [wrongPass, setWrongPass] = useState(0);
 
   useEffect(() => {
-
     if (token) {
       history.replace("/user");
     }
@@ -48,7 +52,6 @@ export default function Login() {
           setWrongPass(wrongPass + 1);
           return;
         }
-
 
         setToken(data.token);
         setTokenExpire(data.expires);
@@ -87,7 +90,9 @@ export default function Login() {
           </div>
           <div>
             {wrongPass ? (
-              <div className="login-fail">{strings.login_passWrong} ({strings.login_failed}: {wrongPass})</div>
+              <div className="login-fail">
+                {strings.login_passWrong} ({strings.login_failed}: {wrongPass})
+              </div>
             ) : null}
             <div className="password-reset-button">
               <NavLink to="request-reset-password">

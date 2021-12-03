@@ -6,6 +6,11 @@ import FontButton from "./FontButton";
 
 export default function ThemeInfo() {
   const [font, setFont] = useGlobalState("font");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   useEffect(() => {
     localStorage.setItem("font", font);

@@ -134,8 +134,8 @@ export default function App() {
           <Route path="/user/remote/:newStage" component={StageInitiator} />
           <Route path="/user/stage" />
 
-          <Route path="/user/movie/:slug" />
-          <Route path="/user/show/:slug" />
+          {/* <Route path="/user/movie/:slug" />
+          <Route path="/user/show/:slug" /> */}
         </Switch>
 
         <ToastManager></ToastManager>

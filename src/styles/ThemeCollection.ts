@@ -127,6 +127,10 @@ interface bTheme {
 }
 
 const themes: ThemeCollection = {
+    'white': z9009,
+    'calm_blue': rose_pine_moon,
+    'high_contrast': matrix,
+
     '8008': z8008,
     'aether': aether,
     '9009': z9009,

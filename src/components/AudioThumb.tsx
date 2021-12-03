@@ -1,18 +1,36 @@
 import AudioFile from "../types/AudioFile";
 
-import '../styles/components/AudioThumb.css';
+import "../styles/components/AudioThumb.css";
+import MediaItem from "../types/MediaItem";
 
-export default function AudioThumb ({ track }: {track: AudioFile}) {
-
-    return (
-        <div className="audio-thumb-behind">
-            <div className="audio-thumb-bgparent" style={{backgroundImage: `url(${track.art_uri})`}}>
-                <div className="audio-thumb">
-                    <div className="audio-thumb-text">
-                        <div className="audio-thumb-title">{track.title}</div>
-                    </div>
-                </div>
-            </div>
+export default function AudioThumb({
+  track,
+  setMediaModal,
+}: {
+  track: MediaItem;
+  setMediaModal: any;
+}) {
+  return (
+    <div className="audio-thumb-behind">
+      <div
+        className="audio-thumb-bgparent"
+        style={{ backgroundImage: `url(${track.meta.thumb})` }}
+      >
+        <div
+          className="audio-thumb"
+          tabIndex={0}
+          onClick={setMediaModal}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setMediaModal();
+            }
+          }}
+        >
+          <div className="audio-thumb-text">
+            <div className="audio-thumb-title">{track.meta.title}</div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

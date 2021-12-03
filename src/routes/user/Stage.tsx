@@ -1,7 +1,15 @@
 import {
   IconArrowRightSquare,
+  IconMusic,
   IconPlayerPause,
   IconPlayerPlay,
+  IconPlayerTrackNext,
+  IconPlayerTrackPrev,
+  IconQuestionMark,
+  IconVideo,
+  IconVolume,
+  IconVolume2,
+  IconVolume3,
 } from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router";
@@ -20,7 +28,11 @@ export default function Stage() {
   const [stage, setStage] = useGlobalState("stage");
   const [user, setUser] = useGlobalState("user");
   const [isRemote, setIsRemote] = useGlobalState("isRemote");
-  const [token, setToken] = useGlobalState("token");
+  const [token, setToken] = useGlobalState("token");const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   const location = useLocation();
   const history = useHistory();
@@ -29,10 +41,12 @@ export default function Stage() {
   const [isActive, setIsActive] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const [completeCount, setCompleteCount] = useState(0);
-  const [currentQueueIndex, setCurrentQueueIndex] = useState(0);
+  const [localPlayState, setLocalPlayState] = useState(false);
+  const [playerVolume, setPlayerVolume] = useState(0);
+  const [currentVideoTime, setCurrentVideoTime] = useState(0);
 
   // Makes sure that re-renders happen when needed
-  const [msgCount, setMsgCount] = useState(0);
+  const [msgCount, setMsgCount] = useState(12);
 
   const [myWatchKeys, setMyWatchKeys] = useState({});
   const [watchers, setWatchers] = useState({});
@@ -84,7 +98,6 @@ export default function Stage() {
   }
 
   function sendRecentProgress(time: number) {
-
     if (stage.queue.length < 1) {
       return;
     }
@@ -97,10 +110,10 @@ export default function Stage() {
       body: JSON.stringify({
         user: user._id,
         payload: {
-          mediaId: stage.queue[currentQueueIndex]._id,
-          time
+          mediaId: bestCurrentVideo()?._id,
+          time,
         },
-        type: "video",
+        type: bestCurrentVideo()?.uri.includes("mp4") ? "video" : "audio",
       }),
     });
   }
@@ -125,9 +138,12 @@ export default function Stage() {
       }
     }
 
+    // Setting Event Listeners
     if (video.current != null) {
       video.current.ontimeupdate = function () {
         if (video.current != null) {
+          setCurrentVideoTime(video.current.currentTime);
+
           sendInformMessage();
 
           if (Math.round(video.current.currentTime) % 5 == 0) {
@@ -138,34 +154,30 @@ export default function Stage() {
 
       video.current.onpause = function () {
         sendRecentProgress((video as any).current.currentTime);
-      }
+        setLocalPlayState(false);
+      };
+
+      video.current.onplaying = function () {
+        setLocalPlayState(true);
+      };
 
       // Effectively re-runs this useEffect.
       video.current.onended = function () {
-        setCompleteCount(completeCount + 1);
+        console.log(stage.queue.length);
+        if (completeCount < stage.queue.length) {
+          setCompleteCount(completeCount + 1);
+        }
       };
     }
 
     // Maybe this should just be in the onended function?
     if (
       video.current != null &&
-      video.current.currentTime == video.current.duration
+      video.current.currentTime == video.current.duration &&
+      !(bestCurrentIndex() == 0 && stage.queue.length != 1)
     ) {
-      console.log("next");
+      let queueItem = bestCurrentVideo();
 
-      let queueItem;
-      for (let i = 0; i < stage.queue.length; i++) {
-        if (
-          video.current.src
-            .substr(video.current.src.lastIndexOf("/") + 1)
-            .split("?")[0] == stage.queue[i].uri
-        ) {
-          queueItem = stage.queue[i + 1];
-          setCurrentQueueIndex(i+1);
-          
-          break;
-        }
-      }
       if (queueItem == undefined) {
         return;
       }
@@ -177,6 +189,11 @@ export default function Stage() {
 
         console.log(stage.queue, storedKey);
         video.current.src = `${BASE_CONTENT_URL}/content/restrict/${queueItem.uri}?token=${storedKey.token}`;
+
+        if (queueItem.startsAt) {
+          video.current.currentTime = queueItem.startsAt;
+        }
+
         console.log("updating source");
       } else {
         console.error("could not find key for media item");
@@ -299,6 +316,11 @@ export default function Stage() {
         video.current.src = `${BASE_CONTENT_URL}/content/restrict/${
           stage.queue[0].uri
         }?token=${sources[stage.queue[0]._id].token}`;
+
+        if (stage.queue[0].startsAt) {
+          video.current.currentTime = stage.queue[0].startsAt;
+        }
+
         console.log("set source");
       }
     }
@@ -343,7 +365,17 @@ export default function Stage() {
     })();
   }, [stage.queue]);
 
+  useEffect(() => {
+    if (video.current !== null) {
+      video.current.volume = playerVolume;
+    }
+  }, [playerVolume]);
+
   const formattedSeconds = (seconds: number = 0) => {
+    if (!(seconds >= 0)) {
+      return "0:00";
+    }
+
     const hhmmss: string = new Date(Math.floor(seconds) * 1000)
       .toISOString()
       .substr(11, 8);
@@ -354,19 +386,132 @@ export default function Stage() {
     return hhmmss;
   };
 
+  const bestCurrentIndex = () => {
+    if (completeCount < stage.queue.length) {
+      return completeCount;
+    } else {
+      return 0;
+    }
+  };
+
+  const bestCurrentVideo = () => {
+    if (stage.queue.length >= 1) {
+      return stage.queue[bestCurrentIndex()];
+    } else {
+      return null;
+    }
+  };
+
+  const playLocal = () => {
+    if (video.current) {
+      video.current.play();
+    }
+  };
+
+  const pauseLocal = () => {
+    if (video.current) {
+      video.current.pause();
+    }
+  };
+
+  const nextLocal = () => {
+    if (video.current) {
+      video.current.currentTime = video.current.duration - 0.001;
+      video.current.play();
+    }
+  };
+
+  const prevLocal = () => {
+    return;
+  };
+
+  const skipTo = (time: number) => {
+    if (video.current) {
+      video.current.currentTime = time;
+    }
+  };
+
   return (
     <div
       id="stage"
       className={`${isActive ? "stage-active" : "stage-inactive"} ${
         isFull ? "stage-full" : "stage-mini"
-      } ${isRemote ? "stage-remote" : null}`}
+      } ${isRemote ? "stage-remote" : null}
+      ${
+        video.current && video.current.src.includes(".mp3")
+          ? "stage-music"
+          : "stage-video"
+      }`}
     >
       <div id="stage-pseudo-header">A</div>
       <div id="stage-content">
         <div id="stage-player">
-          <video id="stage-player-video" ref={video} controls muted autoPlay>
+          <video id="stage-player-video" ref={video} controls autoPlay>
             <source type="video/mp4" />
           </video>
+          <div className="music-content">
+            <div
+              className="music-image"
+              style={{
+                backgroundImage: `url(${bestCurrentVideo()?.meta.thumb})`,
+              }}
+            >
+              &nbsp;
+            </div>
+            <div className="music-details">
+              <div>
+                {bestCurrentVideo()
+                  ? bestCurrentVideo()?.meta.title
+                  : "Nothing Playing"}
+              </div>
+            </div>
+            <div className="music-controls">
+              <div className="music-controls-track">
+                <IconPlayerTrackPrev tabIndex={0} onClick={prevLocal}></IconPlayerTrackPrev>
+
+                {localPlayState ? (
+                  <IconPlayerPause tabIndex={0} onClick={pauseLocal}></IconPlayerPause>
+                ) : (
+                  <IconPlayerPlay tabIndex={0} onClick={playLocal}></IconPlayerPlay>
+                )}
+                <IconPlayerTrackNext tabIndex={0} onClick={nextLocal}></IconPlayerTrackNext>
+              </div>
+              <div className="music-controls-volume">
+                {playerVolume != 0 ? (
+                  playerVolume > 0.35 ? (
+                    <IconVolume></IconVolume>
+                  ) : (
+                    <IconVolume2></IconVolume2>
+                  )
+                ) : (
+                  <IconVolume3></IconVolume3>
+                )}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={playerVolume * 100}
+                  onChange={(e) => {
+                    setPlayerVolume(Number(e.target.value) / 100);
+                  }}
+                ></input>
+              </div>
+              <div className="music-controls-seek">
+                <div>{formattedSeconds(currentVideoTime)}</div>
+                <input
+                  type="range"
+                  min={0}
+                  max={video.current?.duration || 0}
+                  value={currentVideoTime}
+                  onChange={(e) => {
+                    setCurrentVideoTime(Number(e.target.value));
+                    skipTo(Number(e.target.value));
+                  }}
+                ></input>
+                <div>{formattedSeconds(video.current?.duration)}</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="stage-extra-content">
           <div id="global-controls">
@@ -389,7 +534,12 @@ export default function Stage() {
               <h3>{strings.stage_audience_title}</h3>
               {Object.values(watchers).map(
                 (watcher: any /* FIX ME!! UNTYPED */, key: number) => (
-                  <div key={key} className={`stage-watcher ${watcher.imaremote ? 'watcher-remote-hide' : ''}`}>
+                  <div
+                    key={key}
+                    className={`stage-watcher ${
+                      watcher.status.imaremote ? "watcher-remote-hide" : ""
+                    }`}
+                  >
                     <div className="stage-watcher-name">
                       {watcher.status.name}
                       <span className="watcher-uid-tag">
@@ -404,9 +554,9 @@ export default function Stage() {
                     </div>
                     <div className="stage-watcher-pause-contain">
                       {watcher.status.playing ? (
-                        <IconPlayerPlay></IconPlayerPlay>
+                        <IconPlayerPlay tabIndex={0}></IconPlayerPlay>
                       ) : (
-                        <IconPlayerPause></IconPlayerPause>
+                        <IconPlayerPause tabIndex={0}></IconPlayerPause>
                       )}
                     </div>
                     <button
@@ -419,7 +569,7 @@ export default function Stage() {
                         }
                       }}
                     >
-                      <IconArrowRightSquare></IconArrowRightSquare>
+                      <IconArrowRightSquare tabIndex={0}></IconArrowRightSquare>
                     </button>
                   </div>
                 )
@@ -430,11 +580,29 @@ export default function Stage() {
           <div id="stage-queue">
             <h3>{strings.stage_queue_title}</h3>
             <div id="stage-queue-list">
-              {stage.queue.map((media, idx) => (
-                <div className="stage-queue-item" key={idx}>
-                  {media.meta.title} - {media.uri}
-                </div>
-              ))}
+              {stage.queue.map((media, idx) => {
+                return (
+                  <div
+                    className={`stage-queue-item ${
+                      idx == bestCurrentIndex()
+                        ? "stage-queue-item-playing"
+                        : null
+                    }`}
+                    key={idx}
+                  >
+                    <span className="stage-queue-item-thumb">
+                      {media.type.includes("video") ? (
+                        <IconVideo></IconVideo>
+                      ) : media.type.includes("audio") ? (
+                        <IconMusic></IconMusic>
+                      ) : (
+                        <IconQuestionMark></IconQuestionMark>
+                      )}
+                    </span>
+                    {media.meta.title}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

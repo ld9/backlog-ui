@@ -11,14 +11,19 @@ export default function UserDirectory() {
   const [users, setUsers] = useState<Array<any>>([]);
   const [editingUser, setEditingUser] = useState<null | Object>(null);
   const [refreshUserList, setRefreshUserList] = useState(0);
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const refresh = () => {
     setRefreshUserList(refreshUserList + 1);
-  }
+  };
 
   const exitEdit = () => {
     setEditingUser(null);
-  }
+  };
 
   // Run on mount
   useEffect(() => {
@@ -36,12 +41,22 @@ export default function UserDirectory() {
       <div className="admin-content">
         {editingUser ? (
           <div>
-            <EditUserModal user={editingUser} exit={exitEdit} refresh={refresh}></EditUserModal>
+            <EditUserModal
+              user={editingUser}
+              exit={exitEdit}
+              refresh={refresh}
+            ></EditUserModal>
           </div>
         ) : null}
         <div className="admin-userlist">
           {users.map((user, idx) => (
-            <div key={idx} className="admin-userlist-user" onClick={() => {setEditingUser(user)}}>
+            <div
+              key={idx}
+              className="admin-userlist-user"
+              onClick={() => {
+                setEditingUser(user);
+              }}
+            >
               <div className="admin-userlist-user-info">
                 <div className="admin-userlist-user-email">
                   {user.auth.email}

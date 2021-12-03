@@ -8,6 +8,11 @@ import ThemeButton from "./ThemeButton";
 
 export default function ThemeInfo() {
   const [themeName, setThemeName] = useGlobalState("theme");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [showMoreThemes, setShowMoreThemes] = useState(false);
 
@@ -38,19 +43,25 @@ export default function ThemeInfo() {
           <div>
             <div className="theme-selection">
               <ThemeButton
-                themeName="rose_pine_moon"
+                themeName="calm_blue"
                 setTheme={setThemeName}
               ></ThemeButton>
               <ThemeButton
-                themeName="9009"
+                themeName="white"
                 setTheme={setThemeName}
               ></ThemeButton>
               <ThemeButton
-                themeName="matrix"
+                themeName="high_contrast"
                 setTheme={setThemeName}
               ></ThemeButton>
             </div>
-            <button onClick={() => {setShowMoreThemes(true)}}>Show Bonus Themes</button>
+            <button
+              onClick={() => {
+                setShowMoreThemes(true);
+              }}
+            >
+              +
+            </button>
           </div>
         ) : (
           <div className="theme-selection extra">

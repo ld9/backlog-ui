@@ -1,4 +1,5 @@
 import { createGlobalState } from 'react-hooks-global-state';
+import { strings } from './strings';
 import { blankStage } from './types/StageType';
 import ToastPackage from './types/ToastType';
 
@@ -36,5 +37,7 @@ export const { useGlobalState } = createGlobalState({
     user: blankUser,
     toasts: blankToasts,
     showCatalog: false,
-    isRemote: false
+    isRemote: false,
+    language: 'en',
+    strings
 });

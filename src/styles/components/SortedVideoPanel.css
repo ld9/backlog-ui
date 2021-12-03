@@ -1,37 +1,57 @@
 .sorted-panel-inside {
-    padding: 24px 48px;
+  padding: 24px 48px;
 }
 
 .sorted-content {
-    display: flex;
-    margin-top: 24px;
+  display: flex;
+  margin-top: 24px;
 }
 
 .group-select-menu {
-    min-width: 232px;
+  min-width: 232px;
 }
 
 .group-select-button {
-    padding: 12px 104px 12px 24px;
-    margin-right: 24px;
-    cursor: pointer;    
+  padding: 12px 104px 12px 24px;
+  margin-right: 24px;
+  cursor: pointer;
 }
 
 .group-select-button:hover {
-    background-color: var(--main-color);
-    color: var(--bg-color);
+  background-color: var(--main-color);
+  color: var(--bg-color);
 }
 
 .active-select-button {
-    border-left: 8px solid var(--sub-color);
-    padding-left: 20px;
+  border-left: 8px solid var(--sub-color);
+  padding-left: 20px;
 }
 
 .display-panel {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    /* animation: fall-in .35s ease; */
+  /* animation: fall-in .35s ease; */
+}
+
+.display-panel-contain {
+  max-width: 80%;
+}
+
+.display-panel-contain input {
+  width: 224px;
+  border: none;
+
+  margin-bottom: 16px;
+  margin-left: 4px;
+
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--main-color);
+}
+
+.display-panel-contain input:focus {
+  outline: none;
+  border-color: var(--sub-color);
 }
 
 /* @keyframes fall-in {
@@ -47,26 +67,53 @@
 } */
 
 .display-panel > div {
-    margin: 8px;
+  margin: 8px;
 }
 
 .grouping-separator {
-    width: 135px;
-    height: 135px;
+  width: 135px;
+  height: 135px;
 
-    padding: 12px;
+  padding: 12px;
 
-    background-color: var(--main-color);
+  background-color: var(--main-color);
 
-    display: flex;
+  display: flex;
 }
 
 .grouping-separator > div {
-    background-color: var(--main-color);
-    color: var(--bg-color);
+  background-color: var(--main-color);
+  color: var(--bg-color);
 
-    font-size: 1.5vw;
-    word-break: break-word;
+  font-size: 1.4vw;
+  word-break: break-word;
 
-    margin: auto;
+  margin: auto;
+}
+
+.series-thumb-parent {
+  display: flex;
+  margin: 0 !important;
+}
+
+.series-thumb-parent > div {
+  margin: 8px;
+}
+
+@media screen and (max-width: 1140px) {
+  .series-thumb-parent {
+    flex-wrap: wrap;
+  }
+
+  .display-panel-contain {
+    max-width: unset;
+  }
+
+  .sorted-panel-inside {
+    padding: 24px;
+  }
+
+  .grouping-separator > div {
+    font-size: 3vw;
+  }
 }

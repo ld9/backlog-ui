@@ -7,9 +7,11 @@ import { IconLock } from "@tabler/icons";
 export default function VideoThumb({
   video,
   setMediaModal,
+  time = -1,
 }: {
   video: MediaItem;
   setMediaModal: any;
+  time?: number;
 }) {
   const tmdbImage = () => {
     if (video.meta.tmdb) {
@@ -21,6 +23,10 @@ export default function VideoThumb({
     return undefined;
   };
 
+  const formatTime = (time: number): string => {
+    return new Date(time * 1000).toISOString().substr(14, 5);
+  };
+
   return (
     <div className="video-thumb-behind">
       <div
@@ -29,10 +35,16 @@ export default function VideoThumb({
       >
         <div
           className="video-thumb"
+          tabIndex={0} 
           onClick={() => {
             setMediaModal(video);
           }}
-        >
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setMediaModal(video);
+            }
+          }}
+          >
           {video.previewOnly ? (
             <div className="video-thumb-locked">
               <IconLock size={32}></IconLock>
@@ -40,6 +52,9 @@ export default function VideoThumb({
           ) : null}
           <div className="video-thumb-text">
             <div className="video-thumb-title">{video.meta.title}</div>
+            {time != -1 ? (
+              <div className="video-thumb-time">{formatTime(time)}</div>
+            ) : null}
           </div>
         </div>
       </div>

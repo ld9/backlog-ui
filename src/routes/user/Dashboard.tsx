@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AudioThumb from "../../components/AudioThumb";
 import AudioFile from "../../types/AudioFile";
 import VideoFile from "../../types/VideoFile";
@@ -10,10 +10,17 @@ import SocketTest from "../../components/SocketTest";
 import { useHistory } from "react-router-dom";
 import { useGlobalState } from "../../state";
 import { ToastType } from "../../types/ToastType";
+import ContinueWatching from "../../components/dash/ContinueWatching";
+import ListenAgain from "../../components/dash/ListenAgain";
 
 export default function Dashboard() {
   const [toasts, setToasts] = useGlobalState("toasts");
   const [user, setUser] = useGlobalState("user");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   const history = useHistory();
 
@@ -43,48 +50,14 @@ export default function Dashboard() {
       <div className="homepage-section">
         <h2>{strings.dash_listened}</h2>
         <div>
-          test test test test test test
-          {/* <div className="test-contain-tracks">
-            {[...Array(12)].map((x, i) => (
-              <AudioThumb key={i} track={demoTrack}></AudioThumb>
-            ))}
-          </div> */}
+          <ListenAgain></ListenAgain>
         </div>
       </div>
       <div className="homepage-section">
         <h2>{strings.dash_watched}</h2>
-        {/* <div className="test-contain-videos">
-                    {[...Array(8)].map((x, i) => 
-                        <VideoThumb key={i} video={demoVideo}></VideoThumb>
-                    )}
-                </div> */}
-        ----
-        {user.recent.video.map((video: { mediaId: any, time: number }, idx) => {
-          return <div key={idx}>placeholder-testing: {video.mediaId} at {video.time}s</div>;
-        })}
-        ----
-        <SocketTest></SocketTest>
-        <button
-          onClick={() => {
-            history.push("/user/stage/test");
-          }}
-        >
-          Join stage "test"
-        </button>
-        <button
-          onClick={() => {
-            setToasts([
-              ...toasts,
-              {
-                content: "asdasd",
-                type: ToastType.GOOD,
-                until: Date.now() + 3000,
-              },
-            ]);
-          }}
-        >
-          Test toasts
-        </button>
+        <div>
+          <ContinueWatching></ContinueWatching>
+        </div>
       </div>
     </div>
   );

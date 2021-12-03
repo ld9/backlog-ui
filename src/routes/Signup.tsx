@@ -13,6 +13,11 @@ export default function Signup() {
 
   const [token, setToken] = useGlobalState("token");
   const [tokenExpire, setTokenExpire] = useGlobalState("token");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [name, setName] = useState("");
   const [lname, setLname] = useState("");
@@ -79,8 +84,8 @@ export default function Signup() {
         setToken(data.token);
         setTokenExpire(data.expires);
 
-        localStorage.setItem('user-token', data.token);
-        localStorage.setItem('user-token-expires', data.expires);
+        localStorage.setItem("user-token", data.token);
+        localStorage.setItem("user-token-expires", data.expires);
 
         setTimeout(() => {
           history.push("/user");
@@ -103,7 +108,7 @@ export default function Signup() {
   };
 
   const validatePass = (ipassConf: string) => {
-    if (ipassConf === pass) {
+    if (ipassConf === pass && pass.length > 8) {
       setPassConfOk(true);
     } else {
       setPassConfOk(false);
@@ -128,6 +133,7 @@ export default function Signup() {
         <label>
           <p>{strings.signup_fname}</p>
           <input
+            name="fname"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -137,6 +143,7 @@ export default function Signup() {
         <label>
           <p>{strings.signup_lname}</p>
           <input
+            name="lname"
             type="text"
             value={lname}
             onChange={(e) => setLname(e.target.value)}
@@ -146,9 +153,12 @@ export default function Signup() {
       </div>
       <div>
         <label>
-          <p className={passConfOk ? "" : "mismatch-password"}>{strings.signup_pass}</p>
+          <p className={passConfOk ? "" : "mismatch-password"}>
+            {strings.signup_pass}
+          </p>
           <input
             type="password"
+            name="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
             placeholder="•••••••••••••"
@@ -158,6 +168,7 @@ export default function Signup() {
           <p>{strings.signup_passConfirm}</p>
           <input
             type="password"
+            name="confirmPassword"
             value={passConf}
             onChange={(e) => validatePass(e.target.value)}
             placeholder="•••••••••••••"
@@ -172,16 +183,10 @@ export default function Signup() {
   );
 
   const waiting = (
-    <div className="create-status">
-      {strings.signup_processing}
-    </div>
+    <div className="create-status">{strings.signup_processing}</div>
   );
 
-  const success = (
-    <div className="create-status">
-      {strings.signup_success}
-    </div>
-  );
+  const success = <div className="create-status">{strings.signup_success}</div>;
 
   let contents;
   if (submitting === "") {

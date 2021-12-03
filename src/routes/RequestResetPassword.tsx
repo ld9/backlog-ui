@@ -14,12 +14,19 @@ export default function RequestResetPassword() {
 
   const [token, setToken] = useGlobalState("token");
   const [tokenExpire, setTokenExpire] = useGlobalState("tokenExpire");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const [email, setEmail] = useState("");
   const [requestSent, setRequestSent] = useState(false);
+  const [requestDone, setRequestDone] = useState(false);
 
   const doResetRequest = (e: FormEvent) => {
     e.preventDefault();
+    setRequestSent(true);
 
     fetch(`${BASE_API_URL}/user/request-reset-password`, {
       method: "POST",
@@ -32,7 +39,7 @@ export default function RequestResetPassword() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setRequestSent(true);
+        setRequestDone(true);
       });
   };
 
@@ -54,9 +61,15 @@ export default function RequestResetPassword() {
           </div>
           <div>
             {requestSent ? (
-              <p className="reset-request-message">
-                {strings.requestReset_confirm}
-              </p>
+              requestDone ? (
+                <p className="reset-request-message">
+                  {strings.requestReset_confirm}
+                </p>
+              ) : (
+                <p className="reset-request-message">
+                  {strings.requestReset_waiting}
+                </p>
+              )
             ) : (
               <input type="submit" value="Request Reset"></input>
             )}

@@ -13,4 +13,5 @@ export default interface MediaItem {
     type: string;
     sortTag: any;
     previewOnly?: boolean;
+    startsAt?: number;
 }

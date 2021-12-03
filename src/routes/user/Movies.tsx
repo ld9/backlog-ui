@@ -10,7 +10,11 @@ export default function Movies() {
   const [catalogMovies, setCatalogMovies] = useState([]);
 
   // const [showCatalog, setShowCatalog] = useState(false);
-  const [showCatalog, setShowCatalog] = useGlobalState("showCatalog");
+  const [showCatalog, setShowCatalog] = useGlobalState("showCatalog");const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   useEffect(() => {
     (async () => {

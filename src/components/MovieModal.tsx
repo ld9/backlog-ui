@@ -12,6 +12,8 @@ import {
 import { socket } from "../socket";
 import { SocketBeaconMessageType } from "../types/SocketInfoMessage";
 import { BASE_API_URL } from "../variables";
+import { ToastType } from "../types/ToastType";
+import { useEffect } from "react";
 
 export default function MovieModal({
   media,
@@ -22,6 +24,12 @@ export default function MovieModal({
 }) {
   const [user, setUser] = useGlobalState("user");
   const [stage, setStage] = useGlobalState("stage");
+  const [toasts, setToasts] = useGlobalState("toasts");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const tmdbImage = () => {
     if (media) {
@@ -47,7 +55,7 @@ export default function MovieModal({
           media: media._id,
           payload: {
             mediaId: media._id,
-            time: 0
+            time: 0,
           },
           type: "video",
         }),
@@ -57,6 +65,15 @@ export default function MovieModal({
         ...stage,
         queue: [...stage.queue, media],
       } as any);
+
+      setToasts([
+        ...toasts,
+        {
+          until: Date.now() + 2000,
+          type: ToastType.GOOD,
+          content: `Added "${media.meta.title}" to queue`,
+        },
+      ]);
 
       socket.emit(
         "inform-peer",

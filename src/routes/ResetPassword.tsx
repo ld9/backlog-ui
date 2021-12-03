@@ -18,6 +18,11 @@ export default function RequestResetPassword() {
   const [passConf, setPassConf] = useState("");
 
   const [passConfOk, setPassConfOk] = useState(true);
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode])
 
   const doResetRequest = (e: FormEvent) => {
     e.preventDefault();
@@ -58,6 +63,7 @@ export default function RequestResetPassword() {
                 {strings.reset_desired}
               </p>
               <input
+                name="password"
                 type="password"
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
@@ -67,6 +73,7 @@ export default function RequestResetPassword() {
             <label>
               <p>{strings.reset_confirm}</p>
               <input
+                name="passwordConf"
                 type="password"
                 value={passConf}
                 onChange={(e) => validatePass(e.target.value)}

@@ -5,6 +5,11 @@ import { strings } from "../../strings";
 
 export default function ThemeInfo() {
   const [fontSize, setFontSize] = useGlobalState("fontSize");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   useEffect(() => {
     localStorage.setItem("fontSize", fontSize);
@@ -21,7 +26,7 @@ export default function ThemeInfo() {
       <div className="preference-contents">
         <input
           type="range"
-          min="1"
+          min=".75"
           max="1.5"
           step="0.025"
           value={fontSize}

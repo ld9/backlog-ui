@@ -4,6 +4,8 @@ import VideoThumb from "./VideoThumb";
 import "../styles/components/SortedVideoPanel.css";
 import MediaItem from "../types/MediaItem";
 import MovieModal from "./MovieModal";
+import { strings } from "../strings";
+import { useGlobalState } from "../state";
 
 export default function SortedPanel({
   groupingKeys,
@@ -13,10 +15,17 @@ export default function SortedPanel({
   sortableItems: MediaItem[];
 }) {
   const [selectedGrouping, setSelectedGrouping] = useState(0);
+  const [filterString, setFilterString] = useState("");
   const [itemList, setItemList] = useState<MediaItem[]>([]);
 
   const [showModal, setShowModal] = useState(false);
   const [modalMedia, setModalMedia] = useState<MediaItem | null>(null);
+
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const showMediaModal = (video: MediaItem) => {
     setShowModal(true);
@@ -77,8 +86,28 @@ export default function SortedPanel({
         );
     }
 
-    setItemList(_sortedItems);
-  }, [selectedGrouping, sortableItems]);
+    let _filteredSortedItems = _sortedItems.filter((item) => {
+      return JSON.stringify(item)
+        .toLowerCase()
+        .includes(filterString.toLowerCase());
+    });
+
+    let unique: any[] = [];
+    _filteredSortedItems.forEach((item) => {
+      let add = true;
+      unique.forEach((item2) => {
+        if (item.meta.title === item2.meta.title) {
+          add = false;
+        }
+      });
+
+      if (add) {
+        unique.push(item);
+      }
+    });
+
+    setItemList(unique);
+  }, [selectedGrouping, sortableItems, filterString]);
 
   const renderPanelItems = () => {
     let content: any[] = [];
@@ -145,16 +174,36 @@ export default function SortedPanel({
                     : "group-select-button"
                 }
                 onClick={() => setSelectedGrouping(i)}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setSelectedGrouping(i);
+                  }
+                }}
               >
                 {groupKey}
               </div>
             ))}
           </div>
-          <div
-            key={Math.floor(Math.random() * 999999)}
-            className="display-panel"
-          >
-            {renderPanelItems()}
+          <div className="display-panel-contain">
+            <div>
+              <label>
+                {strings.panel_filter}:
+                <input
+                  type="text"
+                  value={filterString}
+                  onChange={(e) => {
+                    setFilterString(e.target.value);
+                  }}
+                ></input>
+              </label>
+            </div>
+            <div
+              key={Math.floor(Math.random() * 999999)}
+              className="display-panel"
+            >
+              {renderPanelItems()}
+            </div>
           </div>
         </div>
       </div>

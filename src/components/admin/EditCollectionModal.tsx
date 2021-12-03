@@ -1,5 +1,6 @@
 import { IconFilePlus, IconPlus, IconTrash, IconUserPlus } from "@tabler/icons";
 import { useEffect, useState } from "react";
+import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
@@ -19,6 +20,12 @@ export default function EditCollectionModal({
 
   const [lookupUser, setLookupUser] = useState(false);
   const [lookupMedia, setLookupMedia] = useState(false);
+
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   const exitLookupUser = () => {
     setLookupUser(false);

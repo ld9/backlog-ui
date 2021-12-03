@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
 import { BASE_API_URL } from "../../variables";
 import Modal from "../Modal";
@@ -11,6 +12,11 @@ export default function UserLookup({
 }: any) {
   const [directory, setDirectory] = useState<Array<any>>([]);
   const [lookup, setLookup] = useState("");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
+
+  useEffect(() => {
+    strings.setLanguage(languageCode);
+  }, [languageCode]);
 
   useEffect(() => {
     fetch(`${BASE_API_URL}/user/directory`)
@@ -34,7 +40,9 @@ export default function UserLookup({
       <div>
         <h3>{strings.admin_collections_user_title}</h3>
         <div className="lookup-list">
-          <div className="lookup-list-title">{strings.admin_collections_user_approved}</div>
+          <div className="lookup-list-title">
+            {strings.admin_collections_user_approved}
+          </div>
           <div className="lookup-list-contents">
             {selected?.map((user: any) => {
               return (
@@ -60,7 +68,9 @@ export default function UserLookup({
           </div>
         </div>
         <div className="lookup-list">
-          <div className="lookup-list-title">{strings.admin_collections_user_directory}</div>
+          <div className="lookup-list-title">
+            {strings.admin_collections_user_directory}
+          </div>
           <div className="lookup-list-filter">
             <input
               type="text"
@@ -74,7 +84,9 @@ export default function UserLookup({
           <div className="lookup-list-contents">
             {directory
               .filter((a: any) => {
-                return JSON.stringify(a).toLowerCase().includes(lookup.toLowerCase());
+                return JSON.stringify(a)
+                  .toLowerCase()
+                  .includes(lookup.toLowerCase());
               })
               .map((user) => {
                 return (
