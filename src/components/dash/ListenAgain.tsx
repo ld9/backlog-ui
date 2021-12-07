@@ -92,7 +92,7 @@ export default function ListenAgain() {
   };
 
   return (
-    <div className="dash-continue-list">
+    <div className="dash-continue-list" data-testid="dash-continue-list">
       {user.recent.audio.map((audio: { mediaId: any; time: number }, idx) => {
         if (!songCache[audio.mediaId]) {
           return null;

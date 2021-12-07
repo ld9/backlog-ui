@@ -35,7 +35,8 @@ export default function VideoThumb({
       >
         <div
           className="video-thumb"
-          tabIndex={0} 
+          data-testid="video-thumb"
+          tabIndex={0}
           onClick={() => {
             setMediaModal(video);
           }}
@@ -44,7 +45,7 @@ export default function VideoThumb({
               setMediaModal(video);
             }
           }}
-          >
+        >
           {video.previewOnly ? (
             <div className="video-thumb-locked">
               <IconLock size={32}></IconLock>

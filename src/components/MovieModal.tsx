@@ -87,7 +87,7 @@ export default function MovieModal({
   };
 
   return (
-    <div className="media-modal">
+    <div className="media-modal" data-testid="video-modal">
       <div
         className="modal-image"
         style={{ backgroundImage: `url(${tmdbImage()})` }}

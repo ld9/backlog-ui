@@ -32,14 +32,21 @@ export default function LanguageSelector() {
           {[
             { code: "en", title: "English" },
             { code: "es", title: "Spanish" },
-          ].map((language) => {
-            return <div className="language-button" tabIndex={0} onClick={
-              () => {
-                strings.setLanguage(language.code);
-                setStrings(strings);
-                setLanguageCode(language.code);
-              }
-            }>{language.title}</div>;
+          ].map((language, i) => {
+            return (
+              <div
+                className="language-button"
+                key={i}
+                tabIndex={0}
+                onClick={() => {
+                  strings.setLanguage(language.code);
+                  setStrings(strings);
+                  setLanguageCode(language.code);
+                }}
+              >
+                {language.title}
+              </div>
+            );
           })}
         </div>
       </div>

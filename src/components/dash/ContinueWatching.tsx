@@ -92,7 +92,7 @@ export default function ContinueWatching() {
   };
 
   return (
-    <div className="dash-continue-list">
+    <div className="dash-continue-list" data-testid="dash-continue-list">
       {user.recent.video.map((video: { mediaId: any; time: number }, idx) => {
         if (!vidCache[video.mediaId]) {
           return null;

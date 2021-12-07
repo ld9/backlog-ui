@@ -11,7 +11,7 @@ export default function AudioThumb({
   setMediaModal: any;
 }) {
   return (
-    <div className="audio-thumb-behind">
+    <div className="audio-thumb-behind" data-testid="audio-thumb">
       <div
         className="audio-thumb-bgparent"
         style={{ backgroundImage: `url(${track.meta.thumb})` }}

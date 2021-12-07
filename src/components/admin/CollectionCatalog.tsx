@@ -36,7 +36,7 @@ export default function CollectionCatalog() {
 
   const createNewCollection = async () => {
     let newCollection = {
-      title: "new-" + Math.floor((Math.random() * 10000)).toString(),
+      title: "new-" + Math.floor(Math.random() * 10000).toString(),
       contents: [],
       members: [],
     };
@@ -71,7 +71,7 @@ export default function CollectionCatalog() {
           </div>
         ) : null}
 
-        <a href="javascript:void()" onClick={createNewCollection}>
+        <a href="" onClick={createNewCollection}>
           {strings.admin_collections_new}
         </a>
         <div className="admin-collection-list">
