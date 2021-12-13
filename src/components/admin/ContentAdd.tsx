@@ -7,10 +7,13 @@ import {
 } from "@tabler/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useHistory } from "react-router-dom";
 
 import { useGlobalState } from "../../state";
 import { strings } from "../../strings";
+import { ToastType } from "../../types/ToastType";
 import { BASE_API_URL } from "../../variables";
+import ToastManager from "../ToastManager";
 
 import Genres from "./genres";
 
@@ -24,6 +27,7 @@ export default function ContentAdd() {
   const [method, setMethod] = useState("upload");
   const [token, setToken] = useGlobalState("token");
   const [languageCode, setLanguageCode] = useGlobalState("language");
+  const [toasts, setToasts] = useGlobalState("toasts");
 
   useEffect(() => {
     strings.setLanguage(languageCode);
@@ -38,6 +42,8 @@ export default function ContentAdd() {
   const [metaBannerUrl, setMetaBannerUrl] = useState("");
   const [metaUserGrant, setMetaUserGrant] = useState("");
   const [metaGroupGrant, setMetaGroupGrant] = useState("");
+
+  const history = useHistory();
 
   const [metaTMDB, setMetaTMDB] = useState<any>({});
 
@@ -105,7 +111,18 @@ export default function ContentAdd() {
           email,
           id,
         }),
-      }).then((res) => console.log(res.body));
+      }).then((res) => {
+        console.log(res.body);
+        setToasts([
+          ...toasts,
+          {
+            type: ToastType.GOOD,
+            content: "Granted",
+            until: Date.now() + 4000,
+          },
+        ]);
+        history.push("/user");
+      });
       // .then(data => console.log(data));
     });
 
