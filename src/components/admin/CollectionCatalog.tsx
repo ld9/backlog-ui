@@ -71,9 +71,12 @@ export default function CollectionCatalog() {
           </div>
         ) : null}
 
-        <a href="" onClick={createNewCollection}>
+        <span
+          style={{ textDecoration: "underline", cursor: "pointer" }}
+          onClick={createNewCollection}
+        >
           {strings.admin_collections_new}
-        </a>
+        </span>
         <div className="admin-collection-list">
           {collections.map(
             (
