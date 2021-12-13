@@ -1,0 +1,22 @@
+- Tests for components (react-testing-library)
+- Video Player
+  - Queue Management / Change Video / Autoplay(X)
+  - Remote Control Mode (i.e. don't load video)
+- Admin Panel
+  - User Management
+    - Add/Remove Users
+    - Assign Permissions
+  - Group Management
+    - Create/Remove Groups
+    - Add/Remove Members
+  - Collections
+    - Create/Remove Collections
+    - Assign Access Permissions
+    - Add/Remove Content from Collections
+  - Media
+    - Upload Audio (Simple)
+    - Upload Series and Create Collection (Automatically)
+    - Remove Media
+    - Assign Permissions
+  - Client
+    - Convert/Compress Automatically

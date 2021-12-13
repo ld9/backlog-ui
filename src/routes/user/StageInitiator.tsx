@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { watchForResponse, socket } from "../../socket";
 import { useGlobalState } from "../../state";
-import { MessageInform, SocketBeaconMessageType } from "../../types/SocketInfoMessage";
+import {
+  MessageInform,
+  SocketBeaconMessageType,
+} from "../../types/SocketInfoMessage";
 import Stage from "../../types/StageType";
 
 export default function StageInitiator() {
@@ -19,19 +22,19 @@ export default function StageInitiator() {
   let [isRemote, setIsRemote] = useGlobalState("isRemote");
   let [user, setUser] = useGlobalState("user");
 
-  
-
   useEffect(() => {
-
     async function doJoin(updatedStage: Stage) {
-      socket.emit("request-join", {stage: updatedStage.name, user: `${user.name.first}${remotePath ? ' (Remote Control)' : ''}`});
-      await watchForResponse('inform-join');
-      
+      socket.emit("request-join", {
+        stage: updatedStage.name,
+        user: `${user.name.first}${remotePath ? " (Remote Control)" : ""}`,
+      });
+      await watchForResponse("inform-join");
+
       setStage(updatedStage);
       history.replace("/user/stage");
-  
+
       return;
-    } 
+    }
 
     if (newStage !== "") {
       let updatedStage;
@@ -55,15 +58,20 @@ export default function StageInitiator() {
       // console.log('doing join')
       doJoin(updatedStage);
       // console.log('join did')
-
-
     }
   }, [setStage, newStage, history, user]);
 
-  return <div>
+  return (
     <div>
-      <h2>Connecting to Server</h2>
-      <p>Trying to {newStage == 'create' ? 'create a new room for you' : `connect you to the stage "${newStage}"`}</p>
+      <div>
+        <h2>Connecting to Server</h2>
+        <p>
+          Trying to{" "}
+          {newStage == "create"
+            ? "create a new room for you"
+            : `connect you to the stage "${newStage}"`}
+        </p>
+      </div>
     </div>
-  </div>;
+  );
 }
