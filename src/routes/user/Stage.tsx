@@ -28,11 +28,12 @@ export default function Stage() {
   const [stage, setStage] = useGlobalState("stage");
   const [user, setUser] = useGlobalState("user");
   const [isRemote, setIsRemote] = useGlobalState("isRemote");
-  const [token, setToken] = useGlobalState("token");const [languageCode, setLanguageCode] = useGlobalState("language");
+  const [token, setToken] = useGlobalState("token");
+  const [languageCode, setLanguageCode] = useGlobalState("language");
 
   useEffect(() => {
     strings.setLanguage(languageCode);
-  }, [languageCode])
+  }, [languageCode]);
 
   const location = useLocation();
   const history = useHistory();
@@ -449,6 +450,16 @@ export default function Stage() {
           <video id="stage-player-video" ref={video} controls autoPlay>
             <source type="video/mp4" />
           </video>
+          <div className="video-controls-track">
+            <IconPlayerTrackPrev
+              tabIndex={0}
+              onClick={prevLocal}
+            ></IconPlayerTrackPrev>
+            <IconPlayerTrackNext
+              tabIndex={0}
+              onClick={nextLocal}
+            ></IconPlayerTrackNext>
+          </div>
           <div className="music-content">
             <div
               className="music-image"
@@ -460,21 +471,38 @@ export default function Stage() {
             </div>
             <div className="music-details">
               <div>
-                {bestCurrentVideo()
-                  ? bestCurrentVideo()?.meta.title
-                  : "Nothing Playing"}
+                {bestCurrentVideo() ? (
+                  <div>
+                    <div>{bestCurrentVideo()?.meta.title}</div>
+                    <div>{bestCurrentVideo()?.meta.artist}</div>
+                  </div>
+                ) : (
+                  "Nothing Playing"
+                )}
               </div>
             </div>
             <div className="music-controls">
               <div className="music-controls-track">
-                <IconPlayerTrackPrev tabIndex={0} onClick={prevLocal}></IconPlayerTrackPrev>
+                <IconPlayerTrackPrev
+                  tabIndex={0}
+                  onClick={prevLocal}
+                ></IconPlayerTrackPrev>
 
                 {localPlayState ? (
-                  <IconPlayerPause tabIndex={0} onClick={pauseLocal}></IconPlayerPause>
+                  <IconPlayerPause
+                    tabIndex={0}
+                    onClick={pauseLocal}
+                  ></IconPlayerPause>
                 ) : (
-                  <IconPlayerPlay tabIndex={0} onClick={playLocal}></IconPlayerPlay>
+                  <IconPlayerPlay
+                    tabIndex={0}
+                    onClick={playLocal}
+                  ></IconPlayerPlay>
                 )}
-                <IconPlayerTrackNext tabIndex={0} onClick={nextLocal}></IconPlayerTrackNext>
+                <IconPlayerTrackNext
+                  tabIndex={0}
+                  onClick={nextLocal}
+                ></IconPlayerTrackNext>
               </div>
               <div className="music-controls-volume">
                 {playerVolume != 0 ? (
