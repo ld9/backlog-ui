@@ -19,7 +19,7 @@ export default function FreeSpace() {
       .then((res) => {
         setSpaceStats(res);
       });
-  });
+  }, []);
 
   useEffect(() => {
     strings.setLanguage(languageCode);
