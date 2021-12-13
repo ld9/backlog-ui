@@ -105,6 +105,11 @@ export interface IStrings extends LocalizedStringsMethods {
 
     admin_users_edit_done: string;
 
+    admin_free_title: string;
+    admin_free_desc: string;
+    admin_free_free: string;
+    admin_free_used: string;
+
     // Settings/Preferences
     settings_title: string;
 
@@ -173,7 +178,7 @@ export const strings: IStrings = new LocalizedStrings({
         home_signup: 'Sign Up',
 
         nav_movies: 'Movies',
-        nav_shows: 'Shows',
+        nav_shows: 'Video Collections',
         nav_music: 'Music',
         nav_admin: 'Admin',
         nav_settings: 'Preferences',
@@ -274,11 +279,16 @@ export const strings: IStrings = new LocalizedStrings({
 
         admin_users_edit_done: 'Done Editing',
 
+        admin_free_title: "Disk Space",
+        admin_free_desc: "Check the current disk usage",
+        admin_free_free: "Free",
+        admin_free_used: "Used",
+
         // Preferences
 
         settings_title: 'Settings',
 
-        settings_size_title: 'Adjust Text Side',
+        settings_size_title: 'Adjust Text Size',
         settings_size_desc: 'Change the size of text on the site',
 
         settings_font_title: 'Adjust Text Font',
@@ -446,6 +456,11 @@ export const strings: IStrings = new LocalizedStrings({
         admin_users_edit_media_revoke: 'Revocar',
 
         admin_users_edit_done: 'Edición terminada',
+
+        admin_free_title: "Espacio en disco",
+        admin_free_desc: "Verifique el uso actual del disco",
+        admin_free_free: "Disponible",
+        admin_free_used: "Usado",
 
         // Preferencias
 

@@ -4,7 +4,6 @@
 
 *******************************************************/
 
-
 .admin-section {
   margin: 24px 48px;
   padding: 12px;
@@ -23,15 +22,11 @@
   max-width: 360px;
 }
 
-
-
 /******************************************************
 
             ADDING NEW CONTENT
 
 *******************************************************/
-
-
 
 .dropzone-contain {
   display: flex;
@@ -41,14 +36,13 @@
   cursor: pointer;
 
   min-height: 252px;
-
 }
 
-.dropzone-title, .dropzone-title * {
+.dropzone-title,
+.dropzone-title * {
   margin: auto;
   color: var(--text-color);
   text-align: center;
-
 }
 
 .dropzone-contain:hover > .dropzone-title * {
@@ -75,9 +69,9 @@ progress {
 
 progress[value] {
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  
+  -moz-appearance: none;
+  appearance: none;
+
   border: none;
 }
 
@@ -86,14 +80,16 @@ progress[value]::-webkit-progress-bar {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
-progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
+progress[value]::-webkit-progress-value,
+progress[value]::-moz-progress-bar {
   transition: width 1s ease;
   background-color: var(--sub-color);
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
-progress[value].saved::-webkit-progress-value, progress[value].saved::-moz-progress-bar {
+progress[value].saved::-webkit-progress-value,
+progress[value].saved::-moz-progress-bar {
   background-color: var(--main-color);
 }
 
@@ -160,7 +156,7 @@ progress[value].saved::-webkit-progress-value, progress[value].saved::-moz-progr
 }
 
 input:focus + span::after {
-  content: '<';
+  content: "<";
   position: fixed;
   font-weight: bold;
 }
@@ -181,14 +177,15 @@ input:focus + span::after {
   padding: 12px;
   border: 1px dashed var(--text-color);
 
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 #media-title-input:focus ~ #media-title-suggest-container {
-  opacity: 1
+  opacity: 1;
 }
 
-#media-title-suggest-container:focus-within, #media-title-suggest-container *:focus-within {
+#media-title-suggest-container:focus-within,
+#media-title-suggest-container *:focus-within {
   background-color: khaki;
 }
 
@@ -197,13 +194,11 @@ input:focus + span::after {
   cursor: pointer;
 }
 
-
 /******************************************************
 
             USER LISTING/EDITING
 
 *******************************************************/
-
 
 .admin-userlist {
   display: grid;
@@ -213,7 +208,7 @@ input:focus + span::after {
 .admin-userlist-user {
   display: flex;
   flex-direction: column;
-  
+
   border: 4px solid var(--sub-color);
   border-radius: 24px;
 
@@ -242,7 +237,7 @@ input:focus + span::after {
 
 .admin-userlist-user-id:before {
   content: "ID";
-  font-size: .8em;
+  font-size: 0.8em;
   color: var(--sub-color);
   margin-right: 4px;
 }
@@ -310,14 +305,11 @@ input:focus + span::after {
   height: 1em;
 }
 
-
-
 /******************************************************
 
             COLLECTION LISTING
 
 *******************************************************/
-
 
 .admin-collection-list {
   display: grid;
@@ -327,7 +319,7 @@ input:focus + span::after {
 .admin-collection-list-item {
   display: flex;
   flex-direction: column;
-  
+
   border: 4px solid var(--sub-color);
   border-radius: 24px;
 
@@ -351,7 +343,7 @@ input:focus + span::after {
 
 .admin-collection-list-item-iterable > span:before {
   content: "ID";
-  font-size: .8em;
+  font-size: 0.8em;
   color: var(--sub-color);
   margin-right: 4px;
 }
@@ -421,11 +413,21 @@ input:focus + span::after {
 }
 
 .tentative {
-  color: var(--sub-color);  
+  color: var(--sub-color);
 }
 
 @media screen and (max-width: 1140px) {
   .admin-collection-list {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.admin-freespace-bar {
+  width: 240px;
+  background-color: var(--sub-color);
+  border-radius: 4px;
+}
+
+.admin-freespace-bar[value]::-moz-progress-bar {
+  background-color: var(--main-color);
 }
