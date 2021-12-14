@@ -18,7 +18,13 @@ export default function UserDirectory() {
   }, [languageCode]);
 
   const refresh = () => {
-    setRefreshUserList(refreshUserList + 1);
+    fetch(`${BASE_API_URL}/user/directory`)
+      .then((res) => res.json())
+      .then((json) => {
+        setUsers(json);
+        console.log("refreshed");
+        setRefreshUserList(refreshUserList + 1);
+      });
   };
 
   const exitEdit = () => {
@@ -27,9 +33,13 @@ export default function UserDirectory() {
 
   // Run on mount
   useEffect(() => {
+    console.log("refreshuserlist");
     fetch(`${BASE_API_URL}/user/directory`)
       .then((res) => res.json())
-      .then((json) => setUsers(json));
+      .then((json) => {
+        setUsers(json);
+        console.log("refreshed");
+      });
   }, [refreshUserList]);
 
   return (

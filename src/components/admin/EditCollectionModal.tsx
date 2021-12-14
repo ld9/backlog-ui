@@ -14,6 +14,7 @@ export default function EditCollectionModal({
 }: any) {
   const [members, setMembers] = useState<null | Array<any>>([]);
   const [content, setContent] = useState<null | Array<any>>([]);
+  const [title, setTitle] = useState<string>(collection.title);
 
   const [tentativeMembers, setTentativeMembers] = useState<Array<any>>([]);
   const [tentativeContent, setTentativeContent] = useState<Array<any>>([]);
@@ -38,6 +39,7 @@ export default function EditCollectionModal({
   const doUpdate = () => {
     let builtCollection = {
       ...collection,
+      title,
       members: members?.map((m) => m._id),
       contents: content?.map((c) => c._id),
     };
@@ -50,7 +52,10 @@ export default function EditCollectionModal({
       body: JSON.stringify(builtCollection),
     })
       .then((res) => res.json())
-      .then((text) => console.log(text));
+      .then((text) => {
+        console.log(text);
+        refresh();
+      });
   };
 
   useEffect(() => {
@@ -125,7 +130,12 @@ export default function EditCollectionModal({
         <div className="collection-edit">
           <h3>
             {strings.admin_collections_edit_title}{" "}
-            <span>{collection.title}</span>
+            <input
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              value={title}
+            />
           </h3>
           <div className="collection-edit-meat">
             <div>

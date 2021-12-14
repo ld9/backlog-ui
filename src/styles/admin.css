@@ -431,3 +431,11 @@ input:focus + span::after {
 .admin-freespace-bar[value]::-moz-progress-bar {
   background-color: var(--main-color);
 }
+
+.user-edit-name {
+  display: flex;
+}
+
+.user-edit-name:first-child {
+  margin-right: 12px;
+}

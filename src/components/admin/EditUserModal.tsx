@@ -11,6 +11,9 @@ export default function EditUserModal({ user, refresh, exit }: any) {
   const [isPaid, setIsPaid] = useState(user.permissions.user.paid);
   const [languageCode, setLanguageCode] = useGlobalState("language");
 
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.auth.email);
+
   useEffect(() => {
     strings.setLanguage(languageCode);
   }, [languageCode]);
@@ -78,7 +81,24 @@ export default function EditUserModal({ user, refresh, exit }: any) {
   };
 
   const commitExit = () => {
-    // TODO: commit the changes
+    console.log(email, name);
+
+    fetch(`${BASE_API_URL}/user/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: user._id,
+        auth: {
+          email,
+        },
+        name,
+      }),
+    }).then(() => {
+      refresh();
+    });
+
     exit();
   };
 
@@ -90,12 +110,39 @@ export default function EditUserModal({ user, refresh, exit }: any) {
             <span className="user-edit-title">
               {strings.admin_users_edit_title}:
             </span>
-            <span>
-              {user.name.first} {user.name.last}
+            <span className="user-edit-name">
+              <input
+                suppressContentEditableWarning={true}
+                onChange={(e) => {
+                  setName({
+                    last: name.last,
+                    first: e.currentTarget.value,
+                  });
+                }}
+                value={name.first}
+              />
+
+              <input
+                suppressContentEditableWarning={true}
+                onChange={(e) => {
+                  setName({
+                    first: name.first,
+                    last: e.currentTarget.value,
+                  });
+                }}
+                value={name.last}
+              />
             </span>
           </h3>
           <div className="user-edit-email-id">
-            <div className="admin-userlist-user-email">{user.auth.email}</div>
+            <div className="admin-userlist-user-email">
+              <input
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
             <div className="admin-userlist-user-id modal-form">
               #{user._id.substring(user._id.length - 6)}
             </div>

@@ -27,7 +27,13 @@ export default function CollectionCatalog() {
   }, [refreshCollectionList]);
 
   const refresh = () => {
-    setRefreshCollectionList(refreshCollectionList + 1);
+    fetch(`${BASE_API_URL}/api/collection`)
+      .then((res) => res.json())
+      .then((json) => {
+        setCollections(json);
+        setRefreshCollectionList(refreshCollectionList + 1);
+        console.log(json);
+      });
   };
 
   const exitEdit = () => {
