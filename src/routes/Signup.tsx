@@ -6,6 +6,7 @@ import { createGlobalState } from "react-hooks-global-state";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { BASE_API_URL } from "../variables";
 import { useGlobalState } from "../state";
+import ReCAPTCHA from "react-google-recaptcha";
 import { strings } from "../strings";
 
 export default function Signup() {
@@ -176,6 +177,8 @@ export default function Signup() {
         </label>
       </div>
       <div>
+        <ReCAPTCHA sitekey="6LdmM0YdAAAAALnFReuMmwCDA9Eis9JmCj3gwl_J"></ReCAPTCHA>
+
         <div className="alert-message">{alertMessage}</div>
         <input type="submit" value="Create Account"></input>
       </div>

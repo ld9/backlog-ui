@@ -26,7 +26,9 @@ const Login = lazy(() => import("./routes/Login"));
 const Signup = lazy(() => import("./routes/Signup"));
 // const Authenticated = lazy(() => import('./routes/Authenticated'));
 
-const RequestResetPassword = lazy(() => import("./routes/RequestResetPassword"));
+const RequestResetPassword = lazy(
+  () => import("./routes/RequestResetPassword")
+);
 const ResetPassword = lazy(() => import("./routes/ResetPassword"));
 
 const Movies = lazy(() => import("./routes/user/Movies"));
@@ -43,7 +45,6 @@ const localStorageFontSize = localStorage.getItem("fontSize");
 const localStorageTheme = localStorage.getItem("themeName");
 const localStorageFont = localStorage.getItem("font");
 
-
 export default function App() {
   const [theme, setTheme] = useGlobalState("theme");
   const [fontSize, setFontSize] = useGlobalState("fontSize");
@@ -53,7 +54,6 @@ export default function App() {
   // Without it, loading only works if you're on preferences. You'd need to go to that page
   // in order to get it to update.
   useEffect(() => {
-
     // Load ThemeName from LocalStorage
     if (localStorageTheme) {
       let theme = themeCollection[localStorageTheme];
@@ -68,18 +68,24 @@ export default function App() {
     // Load FontSize from LocalStorage
     if (localStorageFontSize) {
       setFontSize(localStorageFontSize);
-      document.documentElement.style.setProperty("font-size", localStorageFontSize + "em");
+      document.documentElement.style.setProperty(
+        "font-size",
+        localStorageFontSize + "em"
+      );
     }
 
     // Load FontFamily from LocalStorage
     if (localStorageFont) {
       setFont(localStorageFont);
-      document.documentElement.style.setProperty("font-family", localStorageFont);
+      document.documentElement.style.setProperty(
+        "font-family",
+        localStorageFont
+      );
     }
 
     // Clear mediaKeys
     Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('mediaKey')) {
+      if (key.startsWith("mediaKey")) {
         const stored = localStorage.getItem(key);
         if (stored == null) {
           localStorage.removeItem(key);
@@ -91,10 +97,8 @@ export default function App() {
           localStorage.removeItem(key);
           return;
         }
-
       }
     });
-
   }, []);
 
   return (
@@ -108,7 +112,6 @@ export default function App() {
           </div>
         }
       >
-
         <AuthValidator />
         <Stage></Stage>
 
@@ -120,8 +123,16 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={Signup} />
-          <Route exact path="/request-reset-password" component={RequestResetPassword} />
-          <Route exact path="/reset-password/:token" component={ResetPassword} />
+          <Route
+            exact
+            path="/request-reset-password"
+            component={RequestResetPassword}
+          />
+          <Route
+            exact
+            path="/reset-password/:token"
+            component={ResetPassword}
+          />
 
           <Route exact path="/user" component={Dashboard} />
           <Route path="/user/movies" component={Movies} />
